@@ -1,0 +1,14 @@
+version: '3'
+
+vars:
+  GAME_NAME: game
+  GAME_VERSION: 0.0.1
+
+tasks:
+  linux:
+    cmds:
+      - g++ src/*.c -o debug/{{.GAME_NAME}}-{{.GAME_VERSION}}-debug -I./src/include -L./src/lib -lraylib -Wno-missing-braces  -lGL -lm -lpthread -ldl -lrt -lX11 -Wall
+  web:
+    cmds:
+      # - cd debug/web && rm -rf *
+      - emcc -o debug/web/{{.GAME_NAME}}-{{.GAME_VERSION}}.html src/*.c -Wall -std=c99 -D_DEFAULT_SOURCE -Wno-missing-braces -Wunused-result -Os -I. -I raylib/src -I raylib/src/external -L. -L raylib/src -s USE_GLFW=3 -s ASYNCIFY -s TOTAL_MEMORY=67108864 -s FORCE_FILESYSTEM=1 --preload-file resources --shell-file raylib/src/minshell.html src/web/libraylib.a -s EXPORTED_FUNCTIONS=["_free","_malloc","_main"] -s EXPORTED_RUNTIME_METHODS=ccall -sGL_ENABLE_GET_PROC_ADDRESS

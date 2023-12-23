@@ -1,0 +1,15 @@
+{
+  "name": "tamagama",
+  "version": "0.0.1",
+  "description": "A Tamagotchi inspired game",
+  "scripts": {
+    "changeset": "npx changeset",
+    "changeset:status": "npx changeset status --verbose",
+    "changeset:version": "npx changeset version"
+  },
+  "keywords": [],
+  "author": "Craig R Broughton",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1"
+  }
+}

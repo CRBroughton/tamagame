@@ -1,0 +1,11 @@
+# WASM FILES
+*.html
+*.js
+*.wasm
+*.data
+# RAYLIB
+raylib
+# DEBUG FILES
+*-debug
+# JS
+node_modules
