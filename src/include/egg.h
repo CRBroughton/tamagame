@@ -13,7 +13,8 @@ typedef struct eggStruct
     int warmth;
     float frames;
     float target;
-    float burrDur;
+    float reducer;
+    float shakeArray[5];
 } eggStruct;
 
 struct eggStruct initEgg(int screenWidth, int screenHeight);

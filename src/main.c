@@ -46,7 +46,6 @@ int main(void)
     {
         reduceEggHealth(&egg);
         reduceEggWarmth(&egg);
-        animateEgg(&egg, speed, screenWidth);
         draw(egg);
     }
 

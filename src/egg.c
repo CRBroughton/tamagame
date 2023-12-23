@@ -3,6 +3,8 @@
 #include "include/utils.h"
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 struct eggStruct initEgg(int screenWidth, int screenHeight)
 {
@@ -16,6 +18,14 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
     const int health = 3;
     const int warmth = 3;
 
+    // Set random seed gen
+    srand((unsigned int)time(NULL));
+
+    // Generate a random index to select a float from the array
+    int randomIndex = rand() % 5;
+    int secondRanIndex = rand() % 5;
+    float shakeArray[5] = {10.0f, 15.0f, 25.0f, 12.0f, 18.0f};
+
     struct eggStruct eggStruct = {
         egg,
         source,
@@ -24,8 +34,8 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
         health,
         warmth,
         frames: 0.0f,
-        target: 60.0f,
-        burrDur: 20.0f,
+        target: shakeArray[randomIndex],
+        reducer: shakeArray[secondRanIndex],
     };
 
     return eggStruct;
@@ -89,14 +99,10 @@ void animateEgg(struct eggStruct *egg, float speed, int screenWidth) {
 
     char *frameTimeString = floatToString(egg->frames, 1);
     char *target = floatToString(egg->target, 1);
-    char *burr = floatToString(egg->burrDur, 1);
+    char *burr = floatToString(egg->reducer, 1);
 
-    DrawText(frameTimeString, 30, 30, 1, RED);
-    DrawText(target, 30, 60, 1, RED);
-    DrawText(burr, 30, 90, 1, RED);
-
-    // get to 60, then burr
-    if (egg->frames < 60.0f) {
+    // get to 60, then vibrate
+    if (egg->frames < egg->target) {
         egg->frames += 1;
         return;
     };
@@ -104,19 +110,23 @@ void animateEgg(struct eggStruct *egg, float speed, int screenWidth) {
     // jiggle egg
     egg->destination.x += 1;
 
-    if (egg->destination.x >= width && egg->frames > 3) {
+    if (egg->destination.x >= width) {
         egg->destination.x = screenWidth / 2.0f;
     };
 
-    // decrease the burr dur
-    if (egg->burrDur > 0) {
-        egg->burrDur -= 0.5f;
+    // decrease the reducer
+    if (egg->reducer > 0) {
+        egg->reducer -= 0.5f;
     };
 
     //reset
-    if (egg->burrDur == 0.0f) {
+    if (egg->reducer <= 0.0f) {
         egg->frames = 0.0f;
-        egg->burrDur = 20.0f;
-    }
+        int randomIndex = rand() % 5;
+        int secondRanIndex = rand() % 5;
 
+        float shakeArray[5] = {10.0f, 15.0f, 25.0f, 12.0f, 18.0f};
+        egg->reducer = shakeArray[randomIndex];
+        egg->target = shakeArray[secondRanIndex];
+    }
 }
