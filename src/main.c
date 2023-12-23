@@ -12,14 +12,10 @@ void draw(struct eggStruct egg)
     ClearBackground(RAYWHITE);
 
     renderEgg(egg);
-    char *healthString = intToString(egg.health);
-    char *warmthString = intToString(egg.warmth);
 
     drawEggHealthBar(&egg);
     drawEggWarmthBar(&egg);
 
-    free(healthString);
-    free(warmthString);
     EndDrawing();
 }
 
