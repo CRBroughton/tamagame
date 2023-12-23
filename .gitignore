@@ -9,3 +9,4 @@ raylib
 *-debug
 # JS
 node_modules
+!debug/web/index.html
