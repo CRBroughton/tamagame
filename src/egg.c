@@ -55,3 +55,25 @@ void increaseEggWarmth(struct eggStruct *egg) {
         egg->warmth += 1;
     }
 }   
+
+void drawEggHealthBar(struct eggStruct *egg) {
+    // TODO - draw fancy outline
+    if (egg->health == 3) {
+        DrawRectangle(11, 12, 3, 30, RED);
+    }
+    if (egg->health == 2) {
+        DrawRectangle(11, 22, 3, 20, RED);
+    }
+    DrawRectangle(11, 32, 3, 10, RED);
+}
+
+void drawEggWarmthBar(struct eggStruct *egg) {
+    // TODO - draw fancy outline
+    if (egg->warmth == 3) {
+        DrawRectangle(21, 12, 3, 30, ORANGE);
+    }
+    if (egg->warmth == 2) {
+        DrawRectangle(21, 22, 3, 20, ORANGE);
+    }
+    DrawRectangle(21, 32, 3, 10, ORANGE);
+}

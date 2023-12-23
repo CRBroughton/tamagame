@@ -55,8 +55,8 @@ int main(void)
             char *healthString = intToString(egg.health);
             char *warmthString = intToString(egg.warmth);
 
-        DrawText(healthString, 10, 10, 3, BLACK);       // Draw text (using default font)
-        DrawText(warmthString, 10, 20, 3, BLACK);
+        drawEggHealthBar(&egg);
+        drawEggWarmthBar(&egg);
 
             // DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 

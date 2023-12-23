@@ -18,5 +18,6 @@ void renderEgg(struct eggStruct egg);
 void reduceEggHealth(struct eggStruct *egg);
 void reduceEggWarmth(struct eggStruct *egg);
 void increaseEggWarmth(struct eggStruct *egg);
-
+void drawEggHealthBar(struct eggStruct *egg);
+void drawEggWarmthBar(struct eggStruct *egg);
 #endif // EGG_H
