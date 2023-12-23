@@ -39,12 +39,14 @@ int main(void)
     struct eggStruct egg = initEgg(screenWidth, screenHeight);
 
     SetTargetFPS(60);
+        float speed = 2.0f;  // Adjust this value based on your preference
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         reduceEggHealth(&egg);
         reduceEggWarmth(&egg);
+        animateEgg(&egg, speed, screenWidth);
         draw(egg);
     }
 

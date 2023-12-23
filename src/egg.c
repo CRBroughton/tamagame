@@ -1,5 +1,8 @@
 #include "include/raylib.h"
 #include "include/egg.h"
+#include "include/utils.h"
+
+#include <stdio.h>
 
 struct eggStruct initEgg(int screenWidth, int screenHeight)
 {
@@ -20,6 +23,9 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
         origin,
         health,
         warmth,
+        frames: 0.0f,
+        target: 60.0f,
+        burrDur: 20.0f,
     };
 
     return eggStruct;
@@ -76,4 +82,41 @@ void drawEggWarmthBar(struct eggStruct *egg) {
         DrawRectangle(21, 22, 3, 20, ORANGE);
     }
     DrawRectangle(21, 32, 3, 10, ORANGE);
+}
+
+void animateEgg(struct eggStruct *egg, float speed, int screenWidth) {
+    int width = screenWidth / 2.0f + 2;
+
+    char *frameTimeString = floatToString(egg->frames, 1);
+    char *target = floatToString(egg->target, 1);
+    char *burr = floatToString(egg->burrDur, 1);
+
+    DrawText(frameTimeString, 30, 30, 1, RED);
+    DrawText(target, 30, 60, 1, RED);
+    DrawText(burr, 30, 90, 1, RED);
+
+    // get to 60, then burr
+    if (egg->frames < 60.0f) {
+        egg->frames += 1;
+        return;
+    };
+
+    // jiggle egg
+    egg->destination.x += 1;
+
+    if (egg->destination.x >= width && egg->frames > 3) {
+        egg->destination.x = screenWidth / 2.0f;
+    };
+
+    // decrease the burr dur
+    if (egg->burrDur > 0) {
+        egg->burrDur -= 0.5f;
+    };
+
+    //reset
+    if (egg->burrDur == 0.0f) {
+        egg->frames = 0.0f;
+        egg->burrDur = 20.0f;
+    }
+
 }
