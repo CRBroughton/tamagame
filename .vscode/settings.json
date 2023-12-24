@@ -45,7 +45,8 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "egg.h": "c",
-        "world.h": "c"
+        "world.h": "c",
+        "raylib.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }
