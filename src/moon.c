@@ -3,7 +3,6 @@
 #include "include/utils.h"
 
 #include <stdio.h>
-#include <unistd.h>
 
 moonStruct initMoon(int screenWidth, int screenHeight)
 {
