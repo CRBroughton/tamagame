@@ -38,7 +38,6 @@ int main(void)
     struct moonStruct moon = initMoon(screenWidth, screenHeight);
 
     SetTargetFPS(60);
-    float speed = 2.0f; // Adjust this value based on your preference
     int timer = GetTime();
 
     // Main game loop
