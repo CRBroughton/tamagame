@@ -8,7 +8,7 @@ typedef struct eggStruct
 {
     // int health;
     // int warmth;
-    Texture2D egg;
+    Texture2D texture;
     Rectangle source;
     Rectangle destination;
     Vector2 origin;

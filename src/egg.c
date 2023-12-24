@@ -10,11 +10,11 @@
 struct eggStruct initEgg(int screenWidth, int screenHeight)
 {
 
-    Texture2D egg = LoadTexture("resources/Closed_Egg.png");
+    Texture2D texture = LoadTexture("resources/Closed_Egg.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)egg.width, (float)egg.height};
-    Rectangle destination = {screenWidth / 2.0f, screenHeight / 2.0f, egg.width, egg.height};
-    Vector2 origin = {egg.width / 2, egg.height / 2};
+    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
+    Rectangle destination = {screenWidth / 2.0f, screenHeight / 2.0f, texture.width, texture.height};
+    Vector2 origin = {texture.width / 2, texture.height / 2};
 
     const int health = 3;
     const int warmth = 3;
@@ -31,7 +31,7 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
     float reducer = shakeArray[secondRanIndex];
 
     struct eggStruct eggStruct = {
-        egg,
+        texture,
         source,
         destination,
         origin,
@@ -47,7 +47,7 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
 
 void renderEgg(struct eggStruct egg)
 {
-    DrawTexturePro(egg.egg, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
+    DrawTexturePro(egg.texture, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
 }
 
 void reduceEggHealth(struct eggStruct *egg, int *timer)

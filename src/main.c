@@ -41,27 +41,22 @@ int main(void)
     SetTargetFPS(60);
     int timer = GetTime();
     int warmthTimer = GetTime();
-    int healthTimer = GetTime();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
         // TODO - Create world state for moon/sun/heat/etc
-        // TODO - Move rendering of moon to world state
         // TODO - Create moon + sun orbits
         Color night = {63, 63, 116, 255};
         DrawRectangle(0, 0, screenWidth, screenHeight, night);
-        // Color grass = {55, 148, 110, 255};
-        // DrawRectangle(0, 60, screenWidth, 22, grass);
 
-        reduceEggHealth(&egg, &healthTimer);
         reduceEggWarmth(&egg, &world, &warmthTimer);
         updateMoonPhase(&world.moon, &timer);
         draw(egg, world.moon, world.grass);
     }
 
-    UnloadTexture(egg.egg);
-    UnloadTexture(world.moon.moon);
+    UnloadTexture(egg.texture);
+    UnloadTexture(world.moon.texture);
     CloseWindow();
     return 0;
 }

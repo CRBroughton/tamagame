@@ -6,7 +6,7 @@
 
 typedef struct moonStruct
 {
-    Texture2D moon;
+    Texture2D texture;
     Rectangle source;
     Rectangle destination;
     Vector2 origin;

@@ -6,7 +6,7 @@
 
 moonStruct initMoon(int screenWidth, int screenHeight)
 {
-    Texture2D moon = LoadTexture("resources/Moon.png");
+    Texture2D texture = LoadTexture("resources/Moon.png");
 
     phase phases[3] = {
         {29, 8},
@@ -15,12 +15,12 @@ moonStruct initMoon(int screenWidth, int screenHeight)
     };
     int currentPhase = 0;
 
-    Rectangle source = {0.0f, 0.0f, (float)moon.width, (float)moon.height};
-    Rectangle destination = {phases[currentPhase].x, phases[currentPhase].y, (float)moon.width, (float)moon.height};
-    Vector2 origin = {moon.width / 2, moon.height / 2};
+    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
+    Rectangle destination = {phases[currentPhase].x, phases[currentPhase].y, (float)texture.width, (float)texture.height};
+    Vector2 origin = {texture.width / 2, texture.height / 2};
 
     moonStruct moonStruct = {
-        moon,
+        texture,
         source,
         destination,
         origin,
@@ -40,9 +40,9 @@ void renderMoon(struct moonStruct moon)
     Rectangle destination = {
         moon.phases[moon.currentPhase].x,
         moon.phases[moon.currentPhase].y,
-        (float)moon.moon.width,
-        (float)moon.moon.height};
-    DrawTexturePro(moon.moon, moon.source, destination, moon.origin, 0.0f, WHITE);
+        (float)moon.texture.width,
+        (float)moon.texture.height};
+    DrawTexturePro(moon.texture, moon.source, destination, moon.origin, 0.0f, WHITE);
 };
 
 void updateMoonPhase(struct moonStruct *moon, int *timer)
