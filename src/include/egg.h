@@ -6,8 +6,6 @@
 
 typedef struct eggStruct
 {
-    // int health;
-    // int warmth;
     Texture2D texture;
     Rectangle source;
     Rectangle destination;
@@ -20,12 +18,12 @@ typedef struct eggStruct
     float shakeArray[5];
 } eggStruct;
 
-struct eggStruct initEgg(int screenWidth, int screenHeight);
-void renderEgg(struct eggStruct egg);
-void reduceEggHealth(struct eggStruct *egg, int *timer);
-void reduceEggWarmth(struct eggStruct *egg, struct worldStruct *world, int *timer);
-void increaseEggWarmth(struct eggStruct *egg);
-void drawEggHealthBar(struct eggStruct *egg);
-void drawEggWarmthBar(struct eggStruct *egg);
-void animateEgg(struct eggStruct *egg, float speed, int screenWidth);
+eggStruct initEgg(int screenWidth, int screenHeight);
+void renderEgg(eggStruct egg);
+void reduceEggHealth(eggStruct *egg, int *timer);
+void reduceEggWarmth(eggStruct *egg, worldStruct *world, int *timer);
+void increaseEggWarmth(eggStruct *egg);
+void drawEggHealthBar(eggStruct *egg);
+void drawEggWarmthBar(eggStruct *egg);
+void animateEgg(eggStruct *egg, float speed, int screenWidth);
 #endif // EGG_H

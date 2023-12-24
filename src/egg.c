@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-struct eggStruct initEgg(int screenWidth, int screenHeight)
+eggStruct initEgg(int screenWidth, int screenHeight)
 {
 
     Texture2D texture = LoadTexture("resources/Closed_Egg.png");
@@ -45,12 +45,12 @@ struct eggStruct initEgg(int screenWidth, int screenHeight)
     return eggStruct;
 };
 
-void renderEgg(struct eggStruct egg)
+void renderEgg(eggStruct egg)
 {
     DrawTexturePro(egg.texture, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
 }
 
-void reduceEggHealth(struct eggStruct *egg, int *timer)
+void reduceEggHealth(eggStruct *egg, int *timer)
 {
     int elapsedTime = GetTime() - *timer;
 
@@ -63,7 +63,7 @@ void reduceEggHealth(struct eggStruct *egg, int *timer)
     }
 }
 
-void reduceEggWarmth(struct eggStruct *egg, struct worldStruct *world, int *timer)
+void reduceEggWarmth(eggStruct *egg, worldStruct *world, int *timer)
 {
     int elapsedTime = GetTime() - *timer;
 
@@ -78,7 +78,7 @@ void reduceEggWarmth(struct eggStruct *egg, struct worldStruct *world, int *time
     }
 }
 
-void increaseEggWarmth(struct eggStruct *egg)
+void increaseEggWarmth(eggStruct *egg)
 {
     if (egg->warmth < 3)
     {
@@ -86,7 +86,7 @@ void increaseEggWarmth(struct eggStruct *egg)
     }
 }
 
-void drawEggHealthBar(struct eggStruct *egg)
+void drawEggHealthBar(eggStruct *egg)
 {
     // TODO - draw fancy outline
     if (egg->health == 3)
@@ -104,7 +104,7 @@ void drawEggHealthBar(struct eggStruct *egg)
     DrawRectangle(11, 32, 3, 0, RED);
 }
 
-void drawEggWarmthBar(struct eggStruct *egg)
+void drawEggWarmthBar(eggStruct *egg)
 {
     // TODO - draw fancy outline
     if (egg->warmth == 3)
@@ -122,7 +122,7 @@ void drawEggWarmthBar(struct eggStruct *egg)
     DrawRectangle(21, 32, 3, 0, ORANGE);
 }
 
-void animateEgg(struct eggStruct *egg, float speed, int screenWidth)
+void animateEgg(eggStruct *egg, float speed, int screenWidth)
 {
     int width = screenWidth / 2.0f + 2;
 

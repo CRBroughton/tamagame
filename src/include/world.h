@@ -29,6 +29,6 @@ typedef struct worldStruct
 } worldStruct;
 
 worldStruct initWorld(int screenWidth, int screenHeight);
-void renderGrass(struct grassStruct grass);
+void renderGrass(grassStruct grass);
 
 #endif // WORLD_H

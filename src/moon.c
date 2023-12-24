@@ -35,7 +35,7 @@ moonStruct initMoon(int screenWidth, int screenHeight)
     return moonStruct;
 }
 
-void renderMoon(struct moonStruct moon)
+void renderMoon(moonStruct moon)
 {
     Rectangle destination = {
         moon.phases[moon.currentPhase].x,
@@ -45,7 +45,7 @@ void renderMoon(struct moonStruct moon)
     DrawTexturePro(moon.texture, moon.source, destination, moon.origin, 0.0f, WHITE);
 };
 
-void updateMoonPhase(struct moonStruct *moon, int *timer)
+void updateMoonPhase(moonStruct *moon, int *timer)
 {
     int elapsedTime = GetTime() - *timer;
 

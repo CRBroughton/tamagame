@@ -13,7 +13,7 @@ grassStruct initGrass(int screenWidth, int screenHeight)
     Rectangle destination = {screenWidth / 2.0f, screenHeight / 2.0f + 7, grass.width, grass.height};
     Vector2 origin = {grass.width / 2, grass.height / 2};
 
-    struct grassStruct grassStruct = {
+    grassStruct grassStruct = {
         grass,
         source,
         destination,
@@ -23,20 +23,20 @@ grassStruct initGrass(int screenWidth, int screenHeight)
     return grassStruct;
 }
 
-void renderGrass(struct grassStruct grass)
+void renderGrass(grassStruct grass)
 {
     DrawTexturePro(grass.texture, grass.source, grass.destination, grass.origin, 0.0f, WHITE);
 }
 
 worldStruct initWorld(int screenWidth, int screenHeight)
 {
-    struct moonStruct moon = initMoon(screenWidth, screenHeight);
-    struct grassStruct grass = initGrass(screenWidth, screenHeight);
+    moonStruct moon = initMoon(screenWidth, screenHeight);
+    grassStruct grass = initGrass(screenWidth, screenHeight);
     bool night = true;
     bool day = false;
     int warmth = 3;
 
-    struct worldStruct world = {
+    worldStruct world = {
         moon,
         grass,
         night,

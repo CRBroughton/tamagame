@@ -15,8 +15,8 @@ typedef struct moonStruct
 
 } moonStruct;
 
-struct moonStruct initMoon(int screenWidth, int screenHeight);
-void renderMoon(struct moonStruct moon);
-void updateMoonPhase(struct moonStruct *moon, int *timer);
+moonStruct initMoon(int screenWidth, int screenHeight);
+void renderMoon(moonStruct moon);
+void updateMoonPhase(moonStruct *moon, int *timer);
 
 #endif // MOON_H

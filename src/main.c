@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void draw(struct eggStruct egg, struct moonStruct moon, struct grassStruct grass)
+void draw(eggStruct egg, moonStruct moon, grassStruct grass)
 {
     BeginDrawing();
 
@@ -35,8 +35,8 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     // Texture loading
-    struct eggStruct egg = initEgg(screenWidth, screenHeight);
-    struct worldStruct world = initWorld(screenWidth, screenHeight);
+    eggStruct egg = initEgg(screenWidth, screenHeight);
+    worldStruct world = initWorld(screenWidth, screenHeight);
 
     SetTargetFPS(60);
     int timer = GetTime();
