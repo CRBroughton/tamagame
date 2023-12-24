@@ -35,10 +35,12 @@ int main(void)
 
     // Texture loading
     struct eggStruct egg = initEgg(screenWidth, screenHeight);
-    struct moonStruct moon = initMoon(screenWidth, screenHeight);
+    struct worldStruct world = initWorld(screenWidth, screenHeight);
 
     SetTargetFPS(60);
     int timer = GetTime();
+    int warmthTimer = GetTime();
+    int healthTimer = GetTime();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -51,14 +53,14 @@ int main(void)
         Color grass = {55, 148, 110, 255};
         DrawRectangle(0, 60, screenWidth, 22, grass);
 
-        reduceEggHealth(&egg);
-        reduceEggWarmth(&egg);
-        updateMoonPhase(&moon, &timer);
-        draw(egg, moon);
+        reduceEggHealth(&egg, &healthTimer);
+        reduceEggWarmth(&egg, &world, &warmthTimer);
+        updateMoonPhase(&world.moon, &timer);
+        draw(egg, world.moon);
     }
 
     UnloadTexture(egg.egg);
-    UnloadTexture(moon.moon);
+    UnloadTexture(world.moon.moon);
     CloseWindow();
     return 0;
 }

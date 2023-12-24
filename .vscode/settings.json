@@ -44,7 +44,8 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "egg.h": "c"
+        "egg.h": "c",
+        "world.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

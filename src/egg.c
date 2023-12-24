@@ -1,5 +1,6 @@
 #include "include/raylib.h"
 #include "include/egg.h"
+#include "include/world.h"
 #include "include/utils.h"
 
 #include <stdio.h>
@@ -49,23 +50,31 @@ void renderEgg(struct eggStruct egg)
     DrawTexturePro(egg.egg, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
 }
 
-void reduceEggHealth(struct eggStruct *egg)
+void reduceEggHealth(struct eggStruct *egg, int *timer)
 {
+    int elapsedTime = GetTime() - *timer;
+
     if (egg->health <= 0)
         return;
-    if (IsKeyPressed(KEY_ENTER))
+    if (egg->warmth <= 0 && elapsedTime == 3)
     {
         egg->health -= 1;
+        *timer = GetTime();
     }
 }
 
-void reduceEggWarmth(struct eggStruct *egg)
+void reduceEggWarmth(struct eggStruct *egg, struct worldStruct *world, int *timer)
 {
+    int elapsedTime = GetTime() - *timer;
+
     if (egg->warmth <= 0)
-        return;
-    if (IsKeyPressed(KEY_SPACE))
+    {
+        reduceEggHealth(egg, timer);
+    }
+    if (world->night == true && elapsedTime == 3)
     {
         egg->warmth -= 1;
+        *timer = GetTime();
     }
 }
 
@@ -88,7 +97,11 @@ void drawEggHealthBar(struct eggStruct *egg)
     {
         DrawRectangle(11, 22, 3, 20, RED);
     }
-    DrawRectangle(11, 32, 3, 10, RED);
+    if (egg->health == 1)
+    {
+        DrawRectangle(11, 32, 3, 10, RED);
+    }
+    DrawRectangle(11, 32, 3, 0, RED);
 }
 
 void drawEggWarmthBar(struct eggStruct *egg)
@@ -102,7 +115,11 @@ void drawEggWarmthBar(struct eggStruct *egg)
     {
         DrawRectangle(21, 22, 3, 20, ORANGE);
     }
-    DrawRectangle(21, 32, 3, 10, ORANGE);
+    if (egg->warmth == 1)
+    {
+        DrawRectangle(21, 32, 3, 10, ORANGE);
+    }
+    DrawRectangle(21, 32, 3, 0, ORANGE);
 }
 
 void animateEgg(struct eggStruct *egg, float speed, int screenWidth)

@@ -10,13 +10,14 @@ typedef struct sun
     phase phases[3];
 } sun;
 
-typedef struct world
+typedef struct worldStruct
 {
     moonStruct moon;
-    sun sun;
     bool night;
     bool day;
     int warmth;
-} world;
+} worldStruct;
+
+worldStruct initWorld(int screenWidth, int screenHeight);
 
 #endif // WORLD_H
