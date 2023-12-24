@@ -1,3 +1,5 @@
+#include "raylib.h"
+
 #ifndef EGG_H
 #define EGG_H
 

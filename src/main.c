@@ -1,16 +1,18 @@
 #include "include/raylib.h"
 #include "include/egg.h"
+#include "include/world.h"
 #include "include/utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void draw(struct eggStruct egg)
+void draw(struct eggStruct egg, struct moonStruct moon)
 {
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
 
+    renderMoon(moon);
     renderEgg(egg);
 
     drawEggHealthBar(&egg);
@@ -33,17 +35,11 @@ int main(void)
 
     // Texture loading
     struct eggStruct egg = initEgg(screenWidth, screenHeight);
-
-    Texture2D moon = LoadTexture("resources/Moon.png");
-
-        Rectangle source = {0.0f, 0.0f, (float)moon.width, (float)moon.height};
-    Rectangle destination = {32, 18, moon.width, moon.height};
-    Vector2 origin = {moon.width / 2, moon.height / 2};
-
-
+    struct moonStruct moon = initMoon(screenWidth, screenHeight);
 
     SetTargetFPS(60);
-        float speed = 2.0f;  // Adjust this value based on your preference
+    float speed = 2.0f; // Adjust this value based on your preference
+    int timer = GetTime();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -56,13 +52,14 @@ int main(void)
         Color grass = {55, 148, 110, 255};
         DrawRectangle(0, 60, screenWidth, 22, grass);
 
-        DrawTexturePro(moon, source, destination, origin, 0.0f, WHITE);
         reduceEggHealth(&egg);
         reduceEggWarmth(&egg);
-        draw(egg);
+        updateMoonPhase(&moon, &timer);
+        draw(egg, moon);
     }
 
     UnloadTexture(egg.egg);
-    CloseWindow(); 
+    UnloadTexture(moon.moon);
+    CloseWindow();
     return 0;
 }
