@@ -4,13 +4,6 @@
 #ifndef WORLD_H
 #define WORLD_H
 
-typedef struct sun
-{
-    int currentPhase;
-    phase phases[3];
-} sun;
-
-
 typedef struct grassStruct
 {
     Texture2D texture;
@@ -30,5 +23,6 @@ typedef struct worldStruct
 
 worldStruct initWorld(int screenWidth, int screenHeight);
 void renderGrass(grassStruct grass);
+void updateDayCycle(worldStruct *world, int screenHeight);
 
 #endif // WORLD_H

@@ -6,14 +6,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void draw(eggStruct egg, moonStruct moon, grassStruct grass)
+void draw(worldStruct *world, eggStruct egg, int screenHeight)
 {
     BeginDrawing();
 
     ClearBackground(RAYWHITE);
 
-    renderGrass(grass);
-    renderMoon(moon);
+    renderGrass(world->grass);
+    renderMoon(&world->moon, screenHeight);
     renderEgg(egg);
 
     drawEggHealthBar(&egg);
@@ -39,8 +39,7 @@ int main(void)
     worldStruct world = initWorld(screenWidth, screenHeight);
 
     SetTargetFPS(60);
-    int timer = GetTime();
-    int warmthTimer = GetTime();
+    double warmthTimer = GetTime();
 
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
@@ -51,8 +50,9 @@ int main(void)
         DrawRectangle(0, 0, screenWidth, screenHeight, night);
 
         reduceEggWarmth(&egg, &world, &warmthTimer);
-        updateMoonPhase(&world.moon, &timer);
-        draw(egg, world.moon, world.grass);
+        updateDayCycle(&world, screenHeight);
+        UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 75);
+        draw(&world, egg, screenHeight);
     }
 
     UnloadTexture(egg.texture);

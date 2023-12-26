@@ -1,5 +1,4 @@
 #include "raylib.h"
-#include "phase.h"
 
 #ifndef MOON_H
 #define MOON_H
@@ -10,13 +9,14 @@ typedef struct moonStruct
     Rectangle source;
     Rectangle destination;
     Vector2 origin;
-    int currentPhase;
-    phase phases[3];
+    float x;
+    float y;
+    float angle;
 
 } moonStruct;
 
 moonStruct initMoon(int screenWidth, int screenHeight);
-void renderMoon(moonStruct moon);
-void updateMoonPhase(moonStruct *moon, int *timer);
-
+void renderMoon(moonStruct *moon, int screenHeight);
+void UpdateMoonPosition(moonStruct *entity, int screenWidth, int screenHeight, int orbitRadius);
+bool isNight(moonStruct *moon, int screenHeight);
 #endif // MOON_H

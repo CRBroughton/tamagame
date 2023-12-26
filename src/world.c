@@ -46,3 +46,12 @@ worldStruct initWorld(int screenWidth, int screenHeight)
 
     return world;
 };
+
+void updateDayCycle(worldStruct *world, int screenHeight)
+{
+    if (isNight(&world->moon, screenHeight)) {
+        world->night = true;
+    } else {
+        world->night = false;
+    }
+}
