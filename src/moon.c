@@ -13,11 +13,18 @@ moonStruct initMoon(int screenWidth, int screenHeight)
     Rectangle destination = {0, 0, (float)texture.width, (float)texture.height};
     Vector2 origin = {texture.width / 2, texture.height / 2};
 
+    int x = 0;
+    int y = 0;
+    float angle = 120.0f;
+
     moonStruct moonStruct = {
         texture,
         source,
         destination,
         origin,
+        x,
+        y,
+        angle,
     };
 
     return moonStruct;
@@ -40,9 +47,9 @@ void renderMoon(moonStruct *moon, int screenHeight)
     }
 }
 
+// Update the moon's position based on the circular path
 void UpdateMoonPosition(moonStruct *moon, int screenWidth, int screenHeight, int orbitRadius) {
-    // Update the moon's position based on the circular path
-    float speed = 0.5f;
+    float speed = 0.03f;
     moon->angle += speed * GetFrameTime();
     moon->x = screenWidth / 2 + orbitRadius * cosf(moon->angle);
     moon->y = screenHeight / 2 + orbitRadius * sinf(moon->angle);

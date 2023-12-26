@@ -20,8 +20,8 @@ typedef struct eggStruct
 
 eggStruct initEgg(int screenWidth, int screenHeight);
 void renderEgg(eggStruct egg);
-void reduceEggHealth(eggStruct *egg, int *timer);
-void reduceEggWarmth(eggStruct *egg, worldStruct *world, int *timer);
+void reduceEggHealth(eggStruct *egg, double *timer);
+void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer);
 void increaseEggWarmth(eggStruct *egg);
 void drawEggHealthBar(eggStruct *egg);
 void drawEggWarmthBar(eggStruct *egg);

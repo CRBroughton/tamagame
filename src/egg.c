@@ -50,7 +50,20 @@ void renderEgg(eggStruct egg)
     DrawTexturePro(egg.texture, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
 }
 
-void reduceEggHealth(eggStruct *egg, int *timer)
+// Function that randomly decides whether to execute another function
+bool passProbabilityCheck() {
+    float randomValue = ((float)rand() / (float)RAND_MAX); // Generate a random float between 0 and 
+    
+    float probability = 0.002f;
+
+    if (randomValue < probability) {
+       return true;
+    } else {
+        return false;
+    }
+}
+
+void reduceEggHealth(eggStruct *egg, double *timer)
 {
     int elapsedTime = GetTime() - *timer;
 
@@ -63,18 +76,15 @@ void reduceEggHealth(eggStruct *egg, int *timer)
     }
 }
 
-void reduceEggWarmth(eggStruct *egg, worldStruct *world, int *timer)
+void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer)
 {
-    int elapsedTime = GetTime() - *timer;
-
     if (egg->warmth <= 0)
     {
         reduceEggHealth(egg, timer);
     }
-    if (world->night == true && elapsedTime == 3)
+    if (world->night == true && passProbabilityCheck() == true)
     {
         egg->warmth -= 1;
-        *timer = GetTime();
     }
 }
 

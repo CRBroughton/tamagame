@@ -9,8 +9,8 @@ typedef struct moonStruct
     Rectangle source;
     Rectangle destination;
     Vector2 origin;
-    float x;
-    float y;
+    int x;
+    int y;
     float angle;
 
 } moonStruct;
