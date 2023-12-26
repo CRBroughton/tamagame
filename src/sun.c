@@ -16,7 +16,7 @@ sunStruct initSun(int screenWidth, int screenHeight)
 
     int x = 0;
     int y = 0;
-    float angle = 120.0f;
+    float angle = 10.0f;
 
     sunStruct sunStruct = {
         texture,
