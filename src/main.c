@@ -59,6 +59,7 @@ int main(void)
 
     UnloadTexture(egg.texture);
     UnloadTexture(world.moon.texture);
+    UnloadTexture(world.sun.texture);
     CloseWindow();
     return 0;
 }
