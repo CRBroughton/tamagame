@@ -1,6 +1,7 @@
 #include "include/raylib.h"
 #include "include/world.h"
 #include "include/moon.h"
+#include "include/sun.h"
 #include "include/utils.h"
 
 #include <stdio.h>
@@ -31,6 +32,8 @@ void renderGrass(grassStruct grass)
 worldStruct initWorld(int screenWidth, int screenHeight)
 {
     moonStruct moon = initMoon(screenWidth, screenHeight);
+    sunStruct sun = initSun(screenWidth, screenHeight);
+
     grassStruct grass = initGrass(screenWidth, screenHeight);
     bool night = true;
     bool day = false;
@@ -38,6 +41,7 @@ worldStruct initWorld(int screenWidth, int screenHeight)
 
     worldStruct world = {
         moon,
+        sun,
         grass,
         night,
         day,

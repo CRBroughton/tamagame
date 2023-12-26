@@ -13,6 +13,7 @@ void draw(worldStruct *world, eggStruct egg, int screenHeight)
     ClearBackground(RAYWHITE);
 
     renderGrass(world->grass);
+    renderSun(&world->sun, screenHeight);
     renderMoon(&world->moon, screenHeight);
     renderEgg(egg);
 
@@ -52,6 +53,7 @@ int main(void)
         reduceEggWarmth(&egg, &world, &warmthTimer);
         updateDayCycle(&world, screenHeight);
         UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 75);
+        UpdateSunPosition(&world.sun, screenWidth, screenHeight, 75);
         draw(&world, egg, screenHeight);
     }
 
