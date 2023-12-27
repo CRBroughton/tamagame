@@ -50,7 +50,8 @@ void renderSun(sunStruct *sun, int screenHeight)
 
 // Update the sun's position based on the circular path
 void UpdateSunPosition(sunStruct *sun, int screenWidth, int screenHeight, int orbitRadius) {
-    float speed = 0.03f;
+    // TODO - set to 0.03f;
+    float speed = 0.53f;
     sun->angle += speed * GetFrameTime();
     sun->x = screenWidth / 2 + orbitRadius * cosf(sun->angle);
     sun->y = screenHeight / 2 + orbitRadius * sinf(sun->angle);

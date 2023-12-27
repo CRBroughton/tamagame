@@ -40,6 +40,9 @@ int main(void)
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
     worldStruct world = initWorld(screenWidth, screenHeight);
+
+    // TODO - Initialise an array of logs, from which only
+    // three can appear at a given time. Use probability function.
     logStruct log = initLog(screenWidth, screenHeight);
 
     SetTargetFPS(60);
@@ -58,6 +61,11 @@ int main(void)
         updateDayCycle(&world, screenHeight);
         UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 75);
         UpdateSunPosition(&world.sun, screenWidth, screenHeight, 75);
+        if (spawnNewLog(&world) == true) {
+        // TODO - Move probability of log spawning to world
+        // And randomly show a log in the log array
+          log.isClicked = false;
+        }
         draw(&world, egg, log, screenHeight);
 
     }

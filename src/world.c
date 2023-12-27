@@ -39,6 +39,7 @@ worldStruct initWorld(int screenWidth, int screenHeight)
     bool night = true;
     bool day = false;
     int warmth = 3;
+    int logCount = 0;
 
     worldStruct world = {
         moon,
@@ -47,6 +48,7 @@ worldStruct initWorld(int screenWidth, int screenHeight)
         night,
         day,
         warmth,
+        logCount,
     };
 
     return world;

@@ -21,6 +21,7 @@ typedef struct worldStruct
     bool night;
     bool day;
     int warmth;
+    int logCount;
 } worldStruct;
 
 worldStruct initWorld(int screenWidth, int screenHeight);

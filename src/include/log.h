@@ -18,4 +18,5 @@ typedef struct logStruct
 logStruct initLog(int screenWidth, int screenHeight);
 void renderLog(logStruct log);
 void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);
+bool spawnNewLog(worldStruct *world);
 #endif // LOG_H

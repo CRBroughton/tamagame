@@ -3,6 +3,10 @@
 #include "include/log.h"
 #include "include/egg.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
 logStruct initLog(int screenWidth, int screenHeight)
 {
     Texture2D texture = LoadTexture("resources/Log.png");
@@ -40,5 +44,21 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
     {
         egg->warmth += 1;
         log->isClicked = true;
+    }
+}
+
+bool spawnNewLog(worldStruct *world) {
+    if (world->night == false) {
+        return false;
+    }
+
+    float randomValue = ((float)rand() / (float)RAND_MAX); // Generate a random float between 0 and 1
+    
+    float probability = 0.005f;
+
+    if (randomValue < probability) {
+       return true;
+    } else {
+        return false;
     }
 }
