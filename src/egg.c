@@ -63,13 +63,15 @@ bool passProbabilityCheck() {
     }
 }
 
-void reduceEggHealth(eggStruct *egg, double *timer)
+void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer)
 {
-    int elapsedTime = GetTime() - *timer;
-
     if (egg->health <= 0)
         return;
-    if (egg->warmth <= 0 && elapsedTime == 3)
+    if (
+        world->night == true &&
+        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true && 
+        passProbabilityCheck() == true
+        )
     {
         egg->health -= 1;
         *timer = GetTime();
@@ -80,9 +82,13 @@ void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer)
 {
     if (egg->warmth <= 0)
     {
-        reduceEggHealth(egg, timer);
+        reduceEggHealth(egg, world, timer);
     }
-    if (world->night == true && passProbabilityCheck() == true)
+    if (
+        world->night == true &&
+        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true && 
+        passProbabilityCheck() == true
+        )
     {
         egg->warmth -= 1;
     }

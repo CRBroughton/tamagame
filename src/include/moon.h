@@ -19,4 +19,5 @@ moonStruct initMoon(int screenWidth, int screenHeight);
 void renderMoon(moonStruct *moon, int screenHeight);
 void UpdateMoonPosition(moonStruct *entity, int screenWidth, int screenHeight, int orbitRadius);
 bool isNight(moonStruct *moon, int screenHeight);
+bool isNightAndMoonVisible(moonStruct *moon, int screenHeight);
 #endif // MOON_H

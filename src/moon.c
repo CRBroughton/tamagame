@@ -35,6 +35,11 @@ bool isNight(moonStruct *moon, int screenHeight)
     return (moon->y <= screenHeight / 2);
 }
 
+bool isNightAndMoonVisible(moonStruct *moon, int screenHeight)
+{
+    return (moon->y <= screenHeight / 2 - 50);
+}
+
 void renderMoon(moonStruct *moon, int screenHeight)
 {
     Rectangle destination = {
