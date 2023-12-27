@@ -19,4 +19,4 @@ sunStruct initSun(int screenWidth, int screenHeight);
 void renderSun(sunStruct *sun, int screenHeight);
 void UpdateSunPosition(sunStruct *entity, int screenWidth, int screenHeight, int orbitRadius);
 bool isDay(sunStruct *sun, int screenHeight);
-#endif // MOON_H
+#endif // SUN_H

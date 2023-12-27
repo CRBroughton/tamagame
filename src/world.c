@@ -2,6 +2,7 @@
 #include "include/world.h"
 #include "include/moon.h"
 #include "include/sun.h"
+#include "include/log.h"
 #include "include/utils.h"
 
 #include <stdio.h>
