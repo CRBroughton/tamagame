@@ -52,7 +52,7 @@ int main(void)
         // TODO - Create moon + sun orbits
         Color night = {63, 63, 116, 255};
         DrawRectangle(0, 0, screenWidth, screenHeight, night);
-        performActionOnClick(GetMousePosition(), (Rectangle){log.destination.x, log.destination.y, log.texture.width, log.texture.height}, &egg, &log, &world);
+        attemptToUseLog(GetMousePosition(), (Rectangle){log.destination.x, log.destination.y, log.texture.width, log.texture.height}, &egg, &log, &world);
 
         reduceEggWarmth(&egg, &world, &warmthTimer);
         updateDayCycle(&world, screenHeight);

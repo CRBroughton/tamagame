@@ -17,5 +17,5 @@ typedef struct logStruct
 
 logStruct initLog(int screenWidth, int screenHeight);
 void renderLog(logStruct log);
-void performActionOnClick(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);
+void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);
 #endif // LOG_H

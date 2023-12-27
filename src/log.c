@@ -30,15 +30,14 @@ void renderLog(logStruct log)
     }
 }
 
-// Function to perform an action when the texture is clicked
-void performActionOnClick(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world)
+void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world)
 {
     if (
         CheckCollisionPointRec(mousePosition, textureRect) &&
-        world->night == true &&
-        IsKeyPressed(KEY_SPACE) &&
+        IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
         egg->warmth < 3)
     {
         egg->warmth += 1;
+        log->isClicked = true;
     }
 }
