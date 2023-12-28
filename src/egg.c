@@ -65,8 +65,9 @@ bool passProbabilityCheck() {
 
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer)
 {
-    if (egg->health <= 0)
+    if (egg->health <= 0) {
         return;
+    }
     if (
         world->night == true &&
         isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true && 
@@ -83,6 +84,7 @@ void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer)
     if (egg->warmth <= 0)
     {
         reduceEggHealth(egg, world, timer);
+        return;
     }
     if (
         world->night == true &&

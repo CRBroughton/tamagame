@@ -15,8 +15,15 @@ typedef struct logStruct
 
 } logStruct;
 
+
+typedef struct LogPosition {
+    int x;
+    int y;
+} LogPosition;
+
 logStruct initLog(int screenWidth, int screenHeight);
 void renderLog(logStruct log);
 void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);
-bool spawnNewLog(worldStruct *world);
+bool spawnNewLog(worldStruct *world, logStruct *log);
+LogPosition getRandomLogPosition();
 #endif // LOG_H

@@ -61,13 +61,16 @@ int main(void)
         updateDayCycle(&world, screenHeight);
         UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 75);
         UpdateSunPosition(&world.sun, screenWidth, screenHeight, 75);
-        if (spawnNewLog(&world) == true) {
-        // TODO - Move probability of log spawning to world
-        // And randomly show a log in the log array
-          log.isClicked = false;
+        if (spawnNewLog(&world, &log) == true)
+        {
+            // TODO - Move probability of log spawning to world
+            // And randomly show a log in the log array
+            LogPosition newPosition = getRandomLogPosition();
+            log.isClicked = false;
+            log.destination.x = screenWidth / 2 + newPosition.x;
+            log.destination.y = screenHeight / 2 + newPosition.y;
         }
         draw(&world, egg, log, screenHeight);
-
     }
 
     UnloadTexture(egg.texture);

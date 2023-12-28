@@ -39,7 +39,6 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
     if (
         CheckCollisionPointRec(mousePosition, textureRect) &&
         IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
-        world->night == true &&
         egg->warmth < 3)
     {
         egg->warmth += 1;
@@ -47,7 +46,10 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
     }
 }
 
-bool spawnNewLog(worldStruct *world) {
+bool spawnNewLog(worldStruct *world, logStruct *log) {
+    if (log->isClicked == false) {
+        return false;
+    }
     if (world->night == false) {
         return false;
     }
@@ -62,3 +64,18 @@ bool spawnNewLog(worldStruct *world) {
         return false;
     }
 }
+
+LogPosition getRandomLogPosition() {
+    const int ARRAY_SIZE = 3;
+    LogPosition possiblePositions[ARRAY_SIZE] = {
+        {x: 10, y: 10},
+        {x: 20, y: 10},
+        {x: 30, y: 15}};
+
+    srand((unsigned int)time(NULL));
+
+    int randomIndex = rand() % ARRAY_SIZE;
+
+    return possiblePositions[randomIndex];
+};
+
