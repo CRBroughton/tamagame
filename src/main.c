@@ -51,7 +51,7 @@ int main(void)
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
-        Texture2D grass = LoadTexture("resources/Grass.png");
+    Texture2D grass = LoadTexture("resources/Grass.png");
 
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
@@ -69,6 +69,13 @@ int main(void)
     {
         // Compute required framebuffer scaling
         float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
+        // The scalefactor is:
+        // 128x128 = actual sprite size for game (in aseperite)
+        // scale = the games current scale based on the window size
+        // scaleFactor = how much to scale 128x128 by, example: if we set gameWidth and height to 512, it would be 4
+        // if set to 1024x1024, we set to 8
+        int scaleFactor = 4;
+        float textureScaleFactor = (scale * scaleFactor);
 
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
@@ -100,9 +107,9 @@ int main(void)
         // new stuff
 
         Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
-        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * (scale * 4))) * 0.5f, (GetScreenHeight() - ((float)grass.height * (scale * 4))) * 0.5f,
-                                   (float)grass.width * (scale * 4), (float)grass.height * (scale * 4)};
-        Vector2 origin = {(float)grass.width * 2 * scale, (float)grass.height * 2 * scale};
+        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * textureScaleFactor)) * 0.5f, (GetScreenHeight() - ((float)grass.height * textureScaleFactor)) * 0.5f,
+                                 (float)grass.width * textureScaleFactor, (float)grass.height * textureScaleFactor};
+        Vector2 origin = {(float)grass.width * scale, (float)grass.height * scale};
         DrawTexturePro(grass, source, destination, (Vector2){0, 0}, 0.0f, WHITE);
 
         EndDrawing();
