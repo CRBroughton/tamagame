@@ -51,6 +51,7 @@ int main(void)
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
+        Texture2D grass = LoadTexture("resources/Grass.png");
 
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
@@ -98,7 +99,6 @@ int main(void)
 
         // new stuff
 
-        Texture2D grass = LoadTexture("resources/Grass.png");
         Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
         Rectangle destination = {(GetScreenWidth() - ((float)grass.width * (scale * 4))) * 0.5f, (GetScreenHeight() - ((float)grass.height * (scale * 4))) * 0.5f,
                                    (float)grass.width * (scale * 4), (float)grass.height * (scale * 4)};
