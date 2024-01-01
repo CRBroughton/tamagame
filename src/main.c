@@ -95,6 +95,16 @@ int main(void)
                        (Rectangle){(GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
                                    (float)gameScreenWidth * scale, (float)gameScreenHeight * scale},
                        (Vector2){0, 0}, 0.0f, WHITE);
+
+        // new stuff
+
+        Texture2D grass = LoadTexture("resources/Grass.png");
+        Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)-grass.height};
+        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * scale)) * 0.5f, (GetScreenHeight() - ((float)grass.height * scale)) * 0.5f,
+                                   (float)grass.width * scale, (float)grass.height * scale};
+        Vector2 origin = {(float)grass.width * scale, (float)grass.height * scale};
+        DrawTexturePro(grass, source, destination, (Vector2){0, 0}, 0.0f, WHITE);
+
         EndDrawing();
 
         // TODO - Create world state for moon/sun/heat/etc
