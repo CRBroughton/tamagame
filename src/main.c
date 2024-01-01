@@ -14,7 +14,7 @@ void draw(worldStruct *world, eggStruct egg, logStruct log, int screenHeight)
 
     // ClearBackground(RAYWHITE);
 
-    renderGrass(world->grass);
+    // renderGrass(world->grass);
     // renderSun(&world->sun, screenHeight);
     // renderMoon(&world->moon, screenHeight);
     // renderEgg(egg);
@@ -87,11 +87,15 @@ int main(void)
                                    (float)gameScreenWidth * getScale(), (float)gameScreenHeight * getScale()},
                        (Vector2){0, 0}, 0.0f, WHITE);
 
-    worldStruct world = initWorld(grassTexture, screenWidth, screenHeight);
+    // worldStruct world = initWorld(grassTexture, screenWidth, screenHeight);
 
-        draw(&world, egg, log, screenHeight);
+    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
+        // draw(&world, egg, log, screenHeight);
+
+        renderGrass(grass);
 
         EndDrawing();
+
 
         // TODO - Migrate all the below to above.
 
