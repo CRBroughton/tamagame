@@ -45,8 +45,8 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetWindowMinSize(128, 128);
 
-    int gameScreenWidth = 640;
-    int gameScreenHeight = 480;
+    int gameScreenWidth = 128;
+    int gameScreenHeight = 128;
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -82,9 +82,9 @@ int main(void)
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
 
-        DrawText("If executed inside a window,\nyou can resize the window,\nand see the screen scaling!", 10, 25, 20, BLACK);
-        DrawText(TextFormat("Default Mouse: [%i , %i]", (int)mouse.x, (int)mouse.y), 350, 25, 20, GREEN);
-        DrawText(TextFormat("Virtual Mouse: [%i , %i]", (int)virtualMouse.x, (int)virtualMouse.y), 350, 55, 20, BLACK);
+        DrawText("If executed inside a window,\nyou can resize the window,\nand see the screen scaling!", 10, 25, 1, BLACK);
+        DrawText(TextFormat("Default Mouse: [%i , %i]", (int)mouse.x, (int)mouse.y), 350, 25, 1, GREEN);
+        DrawText(TextFormat("Virtual Mouse: [%i , %i]", (int)virtualMouse.x, (int)virtualMouse.y), 350, 55, 1, BLACK);
         EndTextureMode();
 
         BeginDrawing();
@@ -99,10 +99,10 @@ int main(void)
         // new stuff
 
         Texture2D grass = LoadTexture("resources/Grass.png");
-        Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)-grass.height};
+        Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
         Rectangle destination = {(GetScreenWidth() - ((float)grass.width * scale)) * 0.5f, (GetScreenHeight() - ((float)grass.height * scale)) * 0.5f,
                                    (float)grass.width * scale, (float)grass.height * scale};
-        Vector2 origin = {(float)grass.width * scale, (float)grass.height * scale};
+        Vector2 origin = {(float)grass.width * 2 * scale, (float)grass.height * 2 * scale};
         DrawTexturePro(grass, source, destination, (Vector2){0, 0}, 0.0f, WHITE);
 
         EndDrawing();
