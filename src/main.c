@@ -35,7 +35,9 @@ int main(void)
     // ENABLE DEBUG
     // SetTraceLogLevel(LOG_ERROR);
 
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    SetWindowMinSize(screenWidth, screenHeight);
 
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
