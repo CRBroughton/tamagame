@@ -43,14 +43,14 @@ int main(void)
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    SetWindowMinSize(128, 128);
+    SetWindowMinSize(512, 512);
 
-    int gameScreenWidth = 128;
-    int gameScreenHeight = 128;
+    int gameScreenWidth = 512;
+    int gameScreenHeight = 512;
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-    SetTextureFilter(target.texture, TEXTURE_FILTER_BILINEAR); // Texture scale filter to use
+    SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
 
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
@@ -100,8 +100,8 @@ int main(void)
 
         Texture2D grass = LoadTexture("resources/Grass.png");
         Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
-        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * scale)) * 0.5f, (GetScreenHeight() - ((float)grass.height * scale)) * 0.5f,
-                                   (float)grass.width * scale, (float)grass.height * scale};
+        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * (scale * 4))) * 0.5f, (GetScreenHeight() - ((float)grass.height * (scale * 4))) * 0.5f,
+                                   (float)grass.width * (scale * 4), (float)grass.height * (scale * 4)};
         Vector2 origin = {(float)grass.width * 2 * scale, (float)grass.height * 2 * scale};
         DrawTexturePro(grass, source, destination, (Vector2){0, 0}, 0.0f, WHITE);
 
