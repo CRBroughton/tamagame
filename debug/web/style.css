@@ -57,8 +57,3 @@ body {
     border-radius: 2px;
     cursor: pointer;
 }
-
-canvas {
-    width: 128px;
-    height: 128px;
-}

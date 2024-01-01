@@ -129,6 +129,7 @@ int main(void)
         // draw(&world, egg, log, screenHeight);
     }
 
+    UnloadTexture(target.texture);
     UnloadTexture(egg.texture);
     UnloadTexture(world.moon.texture);
     UnloadTexture(world.sun.texture);

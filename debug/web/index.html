@@ -32,6 +32,12 @@
                 margin: 0
             }
 
+            /* canvas {
+                width: 512px;
+                height: 512px;
+            } */
+
+          
             canvas.emscripten {
                 border: 0 none;
                 background-color: #000
@@ -43,13 +49,13 @@
     </head>
 
     <body>
-        <div class="main-container" x-data="{ scale: 4 }" :style="`scale: ${scale}`">
+        <!-- <div class="main-container" x-data="{ scale: 1 }" :style="`scale: ${scale}`">
             <div class="buttons-container">
                 <div class="alpine-button" @click="scale >= 1 && scale < 7 ? scale +=1 : scale = 1">I</div>
                 <div class="alpine-button" @click="scale > 1 && scale < 7 ? scale -=1 : scale = 1">D</div>
-            </div>
+            </div> -->
 
-            <canvas class=emscripten id=canvas oncontextmenu=event.preventDefault() tabindex=-1></canvas>
+            <canvas class=emscripten id=canvas oncontextmenu=event.preventDefault() tabindex=-1 ></canvas>
             <p id=output>
         </div>
         <script>var Module = { print: function () { var e = document.getElementById("output"); return e && (e.value = ""), function (n) { arguments.length > 1 && (n = Array.prototype.slice.call(arguments).join(" ")), console.log(n), e && (e.value += n + "\n", e.scrollTop = e.scrollHeight) } }(), canvas: document.getElementById("canvas") }</script>
