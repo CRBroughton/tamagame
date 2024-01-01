@@ -18,7 +18,8 @@ typedef struct eggStruct
     float shakeArray[5];
 } eggStruct;
 
-eggStruct initEgg(int screenWidth, int screenHeight);
+Texture2D loadEggTexture();
+eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight);
 void renderEgg(eggStruct egg);
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer);
 void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer);

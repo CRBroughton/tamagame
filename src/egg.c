@@ -2,20 +2,28 @@
 #include "include/egg.h"
 #include "include/world.h"
 #include "include/utils.h"
+#include "include/constants.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-eggStruct initEgg(int screenWidth, int screenHeight)
+Texture2D loadEggTexture()
 {
-
     Texture2D texture = LoadTexture("resources/Closed_Egg.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = {screenWidth / 2.0f, screenHeight / 2.0f, texture.width, texture.height};
-    Vector2 origin = {texture.width / 2, texture.height / 2};
+    return texture;
+}
 
+eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
+{
+    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
+    Rectangle destination = {
+        (GetScreenWidth() - ((float)texture.width * getTextureScaleFactor())) * 0.5f,
+        (GetScreenHeight() - ((float)texture.height * getTextureScaleFactor())) * 0.5f,
+        (float)texture.width * getTextureScaleFactor(),
+        (float)texture.height * getTextureScaleFactor()};
+    Vector2 origin = {(float)texture.width * getScale(), (float)texture.height * getScale()};
     const int health = 3;
     const int warmth = 3;
 
@@ -47,32 +55,36 @@ eggStruct initEgg(int screenWidth, int screenHeight)
 
 void renderEgg(eggStruct egg)
 {
-    DrawTexturePro(egg.texture, egg.source, egg.destination, egg.origin, 0.0f, WHITE);
+    DrawTexturePro(egg.texture, egg.source, egg.destination, (Vector2){0, 0}, 0.0f, WHITE);
 }
 
 // Function that randomly decides whether to execute another function
-bool passProbabilityCheck() {
-    float randomValue = ((float)rand() / (float)RAND_MAX); // Generate a random float between 0 and 
-    
+bool passProbabilityCheck()
+{
+    float randomValue = ((float)rand() / (float)RAND_MAX); // Generate a random float between 0 and
+
     float probability = 0.002f;
 
-    if (randomValue < probability) {
-       return true;
-    } else {
+    if (randomValue < probability)
+    {
+        return true;
+    }
+    else
+    {
         return false;
     }
 }
 
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer)
 {
-    if (egg->health <= 0) {
+    if (egg->health <= 0)
+    {
         return;
     }
     if (
         world->night == true &&
-        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true && 
-        passProbabilityCheck() == true
-        )
+        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true &&
+        passProbabilityCheck() == true)
     {
         egg->health -= 1;
         *timer = GetTime();
@@ -88,9 +100,8 @@ void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer)
     }
     if (
         world->night == true &&
-        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true && 
-        passProbabilityCheck() == true
-        )
+        isNightAndMoonVisible(&world->moon, GetScreenHeight()) == true &&
+        passProbabilityCheck() == true)
     {
         egg->warmth -= 1;
     }

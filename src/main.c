@@ -45,9 +45,9 @@ int main(void)
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
     // Texture2D grass = LoadTexture("resources/Grass.png");
     Texture2D grassTexture = loadGrassTexture();
+    Texture2D eggTexture = loadEggTexture();
 
     // Texture loading
-    eggStruct egg = initEgg(screenWidth, screenHeight);
 
     // TODO - Initialise an array of logs, from which only
     // three can appear at a given time. Use probability function.
@@ -90,9 +90,12 @@ int main(void)
     // worldStruct world = initWorld(grassTexture, screenWidth, screenHeight);
 
     grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
+    eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
+
         // draw(&world, egg, log, screenHeight);
 
         renderGrass(grass);
+        renderEgg(egg);
 
         EndDrawing();
 
@@ -121,7 +124,8 @@ int main(void)
     }
 
     UnloadTexture(target.texture);
-    UnloadTexture(egg.texture);
+    UnloadTexture(grassTexture);
+    UnloadTexture(eggTexture);
     // UnloadTexture(world.moon.texture);
     // UnloadTexture(world.sun.texture);
     UnloadTexture(log.texture);
