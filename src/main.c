@@ -3,31 +3,27 @@
 #include "include/world.h"
 #include "include/log.h"
 #include "include/utils.h"
+#include "include/constants.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "raymath.h" // Required for: Vector2Clamp()
-
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-
 void draw(worldStruct *world, eggStruct egg, logStruct log, int screenHeight)
 {
-    BeginDrawing();
+    // BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+    // ClearBackground(RAYWHITE);
 
     renderGrass(world->grass);
-    renderSun(&world->sun, screenHeight);
-    renderMoon(&world->moon, screenHeight);
-    renderEgg(egg);
-    renderLog(log);
+    // renderSun(&world->sun, screenHeight);
+    // renderMoon(&world->moon, screenHeight);
+    // renderEgg(egg);
+    // renderLog(log);
 
-    drawEggHealthBar(&egg);
-    drawEggWarmthBar(&egg);
+    // drawEggHealthBar(&egg);
+    // drawEggWarmthBar(&egg);
 
-    EndDrawing();
+    // EndDrawing();
 }
 
 //------------------------------------------------------------------------------------
@@ -35,8 +31,7 @@ void draw(worldStruct *world, eggStruct egg, logStruct log, int screenHeight)
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    const int screenWidth = 128;
-    const int screenHeight = 128;
+
     // ENABLE DEBUG
     // SetTraceLogLevel(LOG_ERROR);
 
@@ -45,17 +40,14 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetWindowMinSize(512, 512);
 
-    int gameScreenWidth = 512;
-    int gameScreenHeight = 512;
-
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
-    Texture2D grass = LoadTexture("resources/Grass.png");
+    // Texture2D grass = LoadTexture("resources/Grass.png");
+    Texture2D grassTexture = loadGrassTexture();
 
     // Texture loading
     eggStruct egg = initEgg(screenWidth, screenHeight);
-    worldStruct world = initWorld(screenWidth, screenHeight);
 
     // TODO - Initialise an array of logs, from which only
     // three can appear at a given time. Use probability function.
@@ -67,21 +59,12 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        // Compute required framebuffer scaling
-        float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
-        // The scalefactor is:
-        // 128x128 = actual sprite size for game (in aseperite)
-        // scale = the games current scale based on the window size
-        // scaleFactor = how much to scale 128x128 by, example: if we set gameWidth and height to 512, it would be 4
-        // if set to 1024x1024, we set to 8
-        int scaleFactor = 4;
-        float textureScaleFactor = (scale * scaleFactor);
 
         // Update virtual mouse (clamped mouse value behind game screen)
         Vector2 mouse = GetMousePosition();
         Vector2 virtualMouse = {0};
-        virtualMouse.x = (mouse.x - (GetScreenWidth() - (gameScreenWidth * scale)) * 0.5f) / scale;
-        virtualMouse.y = (mouse.y - (GetScreenHeight() - (gameScreenHeight * scale)) * 0.5f) / scale;
+        virtualMouse.x = (mouse.x - (GetScreenWidth() - (gameScreenWidth * getScale())) * 0.5f) / getScale();
+        virtualMouse.y = (mouse.y - (GetScreenHeight() - (gameScreenHeight * getScale())) * 0.5f) / getScale();
         virtualMouse = Vector2Clamp(virtualMouse, (Vector2){0, 0}, (Vector2){(float)gameScreenWidth, (float)gameScreenHeight});
 
         // Draw
@@ -100,19 +83,17 @@ int main(void)
 
         // Draw render texture to screen, properly scaled
         DrawTexturePro(target.texture, (Rectangle){0.0f, 0.0f, (float)target.texture.width, (float)-target.texture.height},
-                       (Rectangle){(GetScreenWidth() - ((float)gameScreenWidth * scale)) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * scale)) * 0.5f,
-                                   (float)gameScreenWidth * scale, (float)gameScreenHeight * scale},
+                       (Rectangle){(GetScreenWidth() - ((float)gameScreenWidth * getScale())) * 0.5f, (GetScreenHeight() - ((float)gameScreenHeight * getScale())) * 0.5f,
+                                   (float)gameScreenWidth * getScale(), (float)gameScreenHeight * getScale()},
                        (Vector2){0, 0}, 0.0f, WHITE);
 
-        // new stuff
+    worldStruct world = initWorld(grassTexture, screenWidth, screenHeight);
 
-        Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
-        Rectangle destination = {(GetScreenWidth() - ((float)grass.width * textureScaleFactor)) * 0.5f, (GetScreenHeight() - ((float)grass.height * textureScaleFactor)) * 0.5f,
-                                 (float)grass.width * textureScaleFactor, (float)grass.height * textureScaleFactor};
-        Vector2 origin = {(float)grass.width * scale, (float)grass.height * scale};
-        DrawTexturePro(grass, source, destination, (Vector2){0, 0}, 0.0f, WHITE);
+        draw(&world, egg, log, screenHeight);
 
         EndDrawing();
+
+        // TODO - Migrate all the below to above.
 
         // TODO - Create world state for moon/sun/heat/etc
         // TODO - Create moon + sun orbits
@@ -133,13 +114,12 @@ int main(void)
         //     log.destination.x = screenWidth / 2 + newPosition.x;
         //     log.destination.y = screenHeight / 2 + newPosition.y;
         // }
-        // draw(&world, egg, log, screenHeight);
     }
 
     UnloadTexture(target.texture);
     UnloadTexture(egg.texture);
-    UnloadTexture(world.moon.texture);
-    UnloadTexture(world.sun.texture);
+    // UnloadTexture(world.moon.texture);
+    // UnloadTexture(world.sun.texture);
     UnloadTexture(log.texture);
     CloseWindow();
     return 0;

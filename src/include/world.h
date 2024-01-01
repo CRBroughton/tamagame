@@ -24,7 +24,9 @@ typedef struct worldStruct
     int logCount;
 } worldStruct;
 
-worldStruct initWorld(int screenWidth, int screenHeight);
+Texture2D loadGrassTexture();
+worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight);
+grassStruct initGrass(Texture2D grass, int screenWidth, int screenHeight);
 void renderGrass(grassStruct grass);
 void updateDayCycle(worldStruct *world, int screenHeight);
 

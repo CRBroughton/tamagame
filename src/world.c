@@ -4,17 +4,25 @@
 #include "include/sun.h"
 #include "include/log.h"
 #include "include/utils.h"
+#include "include/constants.h"
 
 #include <stdio.h>
 
-grassStruct initGrass(int screenWidth, int screenHeight)
+Texture2D loadGrassTexture()
 {
     Texture2D grass = LoadTexture("resources/Grass.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
-    Rectangle destination = {screenWidth / 2.0f, screenHeight / 2.0f + 7, grass.width, grass.height};
-    Vector2 origin = {grass.width / 2, grass.height / 2};
+    return grass;
+};
 
+grassStruct initGrass(Texture2D grass, int screenWidth, int screenHeight)
+{
+
+    Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
+    Rectangle destination = {(GetScreenWidth() - ((float)grass.width * getTextureScaleFactor())) * 0.5f, (GetScreenHeight() - ((float)grass.height * getTextureScaleFactor())) * 0.5f,
+                             (float)grass.width * getTextureScaleFactor(), (float)grass.height * getTextureScaleFactor()};
+    Vector2 origin = {(float)grass.width * getScale(), (float)grass.height * getScale()};
+    
     grassStruct grassStruct = {
         grass,
         source,
@@ -27,15 +35,15 @@ grassStruct initGrass(int screenWidth, int screenHeight)
 
 void renderGrass(grassStruct grass)
 {
-    DrawTexturePro(grass.texture, grass.source, grass.destination, grass.origin, 0.0f, WHITE);
+    DrawTexturePro(grass.texture, grass.source, grass.destination, (Vector2){0, 0}, 0.0f, WHITE);
 }
 
-worldStruct initWorld(int screenWidth, int screenHeight)
+worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)
 {
     moonStruct moon = initMoon(screenWidth, screenHeight);
     sunStruct sun = initSun(screenWidth, screenHeight);
 
-    grassStruct grass = initGrass(screenWidth, screenHeight);
+    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
     bool night = true;
     bool day = false;
     int warmth = 3;
@@ -56,9 +64,12 @@ worldStruct initWorld(int screenWidth, int screenHeight)
 
 void updateDayCycle(worldStruct *world, int screenHeight)
 {
-    if (isNight(&world->moon, screenHeight)) {
+    if (isNight(&world->moon, screenHeight))
+    {
         world->night = true;
-    } else {
+    }
+    else
+    {
         world->night = false;
     }
 }
