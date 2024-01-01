@@ -15,14 +15,11 @@ Texture2D loadEggTexture()
     return texture;
 }
 
+
 eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
 {
     Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = {
-        (GetScreenWidth() - ((float)texture.width * getTextureScaleFactor())) * 0.5f,
-        (GetScreenHeight() - ((float)texture.height * getTextureScaleFactor())) * 0.5f,
-        (float)texture.width * getTextureScaleFactor(),
-        (float)texture.height * getTextureScaleFactor()};
+    Rectangle destination = scaledRectangle(texture.width, texture.height);
     Vector2 origin = {(float)texture.width * getScale(), (float)texture.height * getScale()};
     const int health = 3;
     const int warmth = 3;

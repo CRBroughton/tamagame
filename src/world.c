@@ -19,8 +19,7 @@ grassStruct initGrass(Texture2D grass, int screenWidth, int screenHeight)
 {
 
     Rectangle source = {0.0f, 0.0f, (float)grass.width, (float)grass.height};
-    Rectangle destination = {(GetScreenWidth() - ((float)grass.width * getTextureScaleFactor())) * 0.5f, (GetScreenHeight() - ((float)grass.height * getTextureScaleFactor())) * 0.5f,
-                             (float)grass.width * getTextureScaleFactor(), (float)grass.height * getTextureScaleFactor()};
+    Rectangle destination = scaledRectangle(grass.width, grass.height);
     Vector2 origin = {(float)grass.width * getScale(), (float)grass.height * getScale()};
     
     grassStruct grassStruct = {
