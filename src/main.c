@@ -40,9 +40,6 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
     SetWindowMinSize(128, 128);
 
-    int gameScreenWidth = 512;
-    int gameScreenHeight = 512;
-
     // // Texture loading
     Texture2D eggTexture = loadEggTexture();
     Texture2D moonTexture = renderMoonTexture();
