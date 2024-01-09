@@ -1,27 +1,31 @@
 #include "include/raylib.h"
 #include "include/world.h"
 #include "include/utils.h"
+#include "include/constants.h"
 
 #include <stdio.h>
 #include <math.h>
 
-moonStruct initMoon(int screenWidth, int screenHeight)
-{
+Texture2D renderMoonTexture() {
     Texture2D texture = LoadTexture("resources/Moon.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = {0, 0, (float)texture.width, (float)texture.height};
-    Vector2 origin = {texture.width / 2, texture.height / 2};
+    return texture;
+}
+
+moonStruct initMoon(Texture2D texture, int screenWidth, int screenHeight)
+{
 
     int x = 0;
     int y = 0;
+    Vector2 position = (Vector2){
+        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
+        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
+    };
     float angle = 120.0f;
 
     moonStruct moonStruct = {
         texture,
-        source,
-        destination,
-        origin,
+        position,
         x,
         y,
         angle,
@@ -29,6 +33,16 @@ moonStruct initMoon(int screenWidth, int screenHeight)
 
     return moonStruct;
 }
+
+void initMoonPosition(moonStruct *moon) {
+          // Calculate scaling factors
+    float scaleX = (float)screenWidth / moon->texture.width;
+    float scaleY = (float)screenHeight / moon->texture.height;
+    moon->position = (Vector2){
+        gameScreenWidth / 2 - (moon->texture.width * fminf(scaleX, scaleY)) / 2 + moon->x,
+        gameScreenHeight / 2 - (moon->texture.height * fminf(scaleX, scaleY)) / 2 + moon->y,
+    };
+} 
 
 bool isNight(moonStruct *moon, int screenHeight)
 {
@@ -42,22 +56,27 @@ bool isNightAndMoonVisible(moonStruct *moon, int screenHeight)
 
 void renderMoon(moonStruct *moon, int screenHeight)
 {
-    Rectangle destination = {
-        moon->x,
-        moon->y,
-        (float)moon->texture.width,
-        (float)moon->texture.height};
-    if (isNight(moon, screenHeight) == true) {
-        DrawTexturePro(moon->texture, moon->source, destination, moon->origin, 0.0f, WHITE);
-    }
+    // Rectangle destination = {
+    //     moon->x,
+    //     moon->y,
+    //     (float)moon->texture.width,
+    //     (float)moon->texture.height};
+    // if (isNight(moon, screenHeight) == true) {
+        // DrawTexturePro(moon->texture, moon->source, destination, moon->origin, 0.0f, WHITE);
+                 // Calculate scaling factors
+    float scaleX = (float)screenWidth / moon->texture.width;
+    float scaleY = (float)screenHeight / moon->texture.height;
+    DrawTextureEx(moon->texture, moon->position, 0.0f, fminf(scaleX, scaleY), WHITE);
+        DrawTextureEx(moon->texture, moon->position, 0.0f,  fminf(scaleX, scaleY), WHITE);
+    // }
 }
 
 // Update the moon's position based on the circular path
 void UpdateMoonPosition(moonStruct *moon, int screenWidth, int screenHeight, int orbitRadius) {
     // TODO - set to 0.03f;
-    float speed = 0.53f;
+    float speed = 1.53f;
     moon->angle += speed * GetFrameTime();
-    moon->x = screenWidth / 2 + orbitRadius * cosf(moon->angle);
-    moon->y = screenHeight / 2 + orbitRadius * sinf(moon->angle);
+    moon->x = orbitRadius * cosf(moon->angle);
+    moon->y = orbitRadius * sinf(moon->angle);
 }
 

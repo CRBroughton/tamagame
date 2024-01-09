@@ -43,8 +43,13 @@ int main(void)
     int gameScreenWidth = 512;
     int gameScreenHeight = 512;
 
+    // // Texture loading
     Texture2D eggTexture = loadEggTexture();
+    Texture2D moonTexture = renderMoonTexture();
+
+
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
+    moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -52,7 +57,6 @@ int main(void)
     // Texture2D grass = LoadTexture("resources/Grass.png");
     Texture2D grassTexture = loadGrassTexture();
 
-    // // Texture loading
     // eggStruct egg = initEgg(screenWidth, screenHeight);
     // worldStruct world = initWorld(screenWidth, screenHeight);
 
@@ -74,15 +78,21 @@ int main(void)
         // Calculate the position to center the cat texture
 
         initEggPosition(&egg);
-        egg.x += 1;
+        initMoonPosition(&moon);
+        egg.x = 0;
+        egg.y = 0;
+        // moon.x = 0;
+        // moon.y = 0;
+    float a = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
 
-
+    UpdateMoonPosition(&moon, screenWidth, screenHeight, 256);
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
         renderEgg(egg);
+        renderMoon(&moon, screenHeight);
         EndTextureMode();
 
         BeginDrawing();
@@ -125,6 +135,7 @@ int main(void)
     // UnloadTexture(log.texture);
     UnloadTexture(target.texture);
     UnloadTexture(eggTexture);
+    UnloadTexture(moonTexture);
     CloseWindow();
     return 0;
 }

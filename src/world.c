@@ -39,7 +39,7 @@ void renderGrass(grassStruct grass)
 
 worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)
 {
-    moonStruct moon = initMoon(screenWidth, screenHeight);
+    moonStruct moon = initMoon(grassTexture, screenWidth, screenHeight);
     sunStruct sun = initSun(screenWidth, screenHeight);
 
     grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);

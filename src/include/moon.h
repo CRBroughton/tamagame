@@ -6,17 +6,17 @@
 typedef struct moonStruct
 {
     Texture2D texture;
-    Rectangle source;
-    Rectangle destination;
-    Vector2 origin;
+    Vector2 position;
     int x;
     int y;
     float angle;
 
 } moonStruct;
 
-moonStruct initMoon(int screenWidth, int screenHeight);
+Texture2D renderMoonTexture();
+moonStruct initMoon(Texture2D texture, int screenWidth, int screenHeight);
 void renderMoon(moonStruct *moon, int screenHeight);
+void initMoonPosition(moonStruct *moon);
 void UpdateMoonPosition(moonStruct *entity, int screenWidth, int screenHeight, int orbitRadius);
 bool isNight(moonStruct *moon, int screenHeight);
 bool isNightAndMoonVisible(moonStruct *moon, int screenHeight);
