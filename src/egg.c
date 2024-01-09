@@ -15,14 +15,18 @@ Texture2D loadEggTexture()
     return texture;
 }
 
-
 eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
 {
-    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = scaledRectangle(texture.width, texture.height);
-    Vector2 origin = {(float)texture.width * getScale(), (float)texture.height * getScale()};
+    int eggx = 0;
+    int eggy = 0;
+    Vector2 eggPosition = (Vector2){
+        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + eggx,
+        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + eggy,
+    };
     const int health = 3;
     const int warmth = 3;
+    const int x = 0;
+    const int y = 0;
 
     // Set random seed gen
     srand((unsigned int)time(NULL));
@@ -37,22 +41,31 @@ eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
 
     struct eggStruct eggStruct = {
         texture,
-        source,
-        destination,
-        origin,
         health,
         warmth,
+        eggPosition,
+        x,
+        y,
         frames,
         target,
         reducer,
-    };
+        x,
+        y};
 
     return eggStruct;
 };
 
 void renderEgg(eggStruct egg)
 {
-    DrawTexturePro(egg.texture, egg.source, egg.destination, (Vector2){0, 0}, 0.0f, WHITE);
+    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, getScale(), WHITE);
+}
+
+void initEggPosition(eggStruct *egg)
+{
+    egg->eggPosition = (Vector2){
+        gameScreenWidth / 2 - (egg->texture.width * getScale()) / 2 + egg->x,
+        gameScreenHeight / 2 - (egg->texture.height * getScale()) / 2 + egg->y,
+    };
 }
 
 // Function that randomly decides whether to execute another function
@@ -160,11 +173,11 @@ void animateEgg(eggStruct *egg, float speed, int screenWidth)
     };
 
     // jiggle egg
-    egg->destination.x += 1;
+    egg->x += 1;
 
-    if (egg->destination.x >= width)
+    if (egg->x >= width)
     {
-        egg->destination.x = screenWidth / 2.0f;
+        egg->x = screenWidth / 2.0f;
     };
 
     // decrease the reducer

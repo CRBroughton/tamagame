@@ -38,20 +38,27 @@ int main(void)
     // Enable config flags for resizable window and vertical synchro
     SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-    SetWindowMinSize(512, 512);
+    SetWindowMinSize(128, 128);
+
+    int gameScreenWidth = 512;
+    int gameScreenHeight = 512;
+
+    Texture2D eggTexture = loadEggTexture();
+    eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
     // Texture2D grass = LoadTexture("resources/Grass.png");
     Texture2D grassTexture = loadGrassTexture();
-    Texture2D eggTexture = loadEggTexture();
 
-    // Texture loading
+    // // Texture loading
+    // eggStruct egg = initEgg(screenWidth, screenHeight);
+    // worldStruct world = initWorld(screenWidth, screenHeight);
 
-    // TODO - Initialise an array of logs, from which only
-    // three can appear at a given time. Use probability function.
-    logStruct log = initLog(screenWidth, screenHeight);
+    // // TODO - Initialise an array of logs, from which only
+    // // three can appear at a given time. Use probability function.
+    // logStruct log = initLog(screenWidth, screenHeight);
 
     SetTargetFPS(60);
     double warmthTimer = GetTime();
@@ -60,22 +67,22 @@ int main(void)
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
 
-        // Update virtual mouse (clamped mouse value behind game screen)
-        Vector2 mouse = GetMousePosition();
-        Vector2 virtualMouse = {0};
-        virtualMouse.x = (mouse.x - (GetScreenWidth() - (gameScreenWidth * getScale())) * 0.5f) / getScale();
-        virtualMouse.y = (mouse.y - (GetScreenHeight() - (gameScreenHeight * getScale())) * 0.5f) / getScale();
-        virtualMouse = Vector2Clamp(virtualMouse, (Vector2){0, 0}, (Vector2){(float)gameScreenWidth, (float)gameScreenHeight});
+        // Compute required framebuffer scaling
+        float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
+
+        char *eggString = intToString(eggTexture.width);
+        // Calculate the position to center the cat texture
+
+        initEggPosition(&egg);
+        egg.x += 1;
+
 
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
-
-        DrawText("If executed inside a window,\nyou can resize the window,\nand see the screen scaling!", 10, 25, 1, BLACK);
-        DrawText(TextFormat("Default Mouse: [%i , %i]", (int)mouse.x, (int)mouse.y), 350, 25, 1, GREEN);
-        DrawText(TextFormat("Virtual Mouse: [%i , %i]", (int)virtualMouse.x, (int)virtualMouse.y), 350, 55, 1, BLACK);
+        renderEgg(egg);
         EndTextureMode();
 
         BeginDrawing();
@@ -87,18 +94,7 @@ int main(void)
                                    (float)gameScreenWidth * getScale(), (float)gameScreenHeight * getScale()},
                        (Vector2){0, 0}, 0.0f, WHITE);
 
-    // worldStruct world = initWorld(grassTexture, screenWidth, screenHeight);
-
-    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
-    eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
-
-        // draw(&world, egg, log, screenHeight);
-
-        renderGrass(grass);
-        renderEgg(egg);
-
         EndDrawing();
-
 
         // TODO - Migrate all the below to above.
 
@@ -123,12 +119,12 @@ int main(void)
         // }
     }
 
-    UnloadTexture(target.texture);
-    UnloadTexture(grassTexture);
-    UnloadTexture(eggTexture);
+    // UnloadTexture(egg.texture);
     // UnloadTexture(world.moon.texture);
     // UnloadTexture(world.sun.texture);
-    UnloadTexture(log.texture);
+    // UnloadTexture(log.texture);
+    UnloadTexture(target.texture);
+    UnloadTexture(eggTexture);
     CloseWindow();
     return 0;
 }
