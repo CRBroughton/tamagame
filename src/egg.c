@@ -57,20 +57,14 @@ eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
 
 void renderEgg(eggStruct egg)
 {
-         // Calculate scaling factors
-    float scaleX = (float)screenWidth / egg.texture.width;
-    float scaleY = (float)screenHeight / egg.texture.height;
-    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, fminf(scaleX, scaleY), WHITE);
+    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, getScaleForTexture(egg.texture), WHITE);
 }
 
 void initEggPosition(eggStruct *egg)
 {
-          // Calculate scaling factors
-    float scaleX = (float)screenWidth / egg->texture.width;
-    float scaleY = (float)screenHeight / egg->texture.height;
     egg->eggPosition = (Vector2){
-        gameScreenWidth / 2 - (egg->texture.width * fminf(scaleX, scaleY)) / 2 + egg->x,
-        gameScreenHeight / 2 - (egg->texture.height * fminf(scaleX, scaleY)) / 2 + egg->y,
+        gameScreenWidth / 2 - (egg->texture.width * getScaleForTexture(egg->texture)) / 2 + egg->x,
+        gameScreenHeight / 2 - (egg->texture.height * getScaleForTexture(egg->texture)) / 2 + egg->y,
     };
 }
 

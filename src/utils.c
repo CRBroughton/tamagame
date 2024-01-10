@@ -3,6 +3,7 @@
 #include <math.h>
 #include "include/raylib.h"
 #include "include/constants.h"
+#include "utils.h"
 
 char *intToString(int number)
 {
@@ -59,3 +60,12 @@ Rectangle scaledRectangle(int width, int height)
 
     return scaledRectangle;
 };
+
+
+
+float getScaleForTexture(Texture2D texture) {
+    float scaleX = (float)screenWidth / texture.width;
+    float scaleY = (float)screenHeight / texture.height;
+
+    return fminf(scaleX, scaleY);
+}

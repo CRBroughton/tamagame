@@ -43,16 +43,20 @@ int main(void)
     // // Texture loading
     Texture2D eggTexture = loadEggTexture();
     Texture2D moonTexture = renderMoonTexture();
-
+    Texture2D sunTexture = loadSunTexture();
+    Texture2D grassTexture = loadGrassTexture();
+    Texture2D nightSkyTexture = loadNightSkyTexture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
     moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
+    sunStruct sun = initSun(sunTexture, screenWidth, screenHeight);
+    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
+    nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
     SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
     // Texture2D grass = LoadTexture("resources/Grass.png");
-    Texture2D grassTexture = loadGrassTexture();
 
     // eggStruct egg = initEgg(screenWidth, screenHeight);
     // worldStruct world = initWorld(screenWidth, screenHeight);
@@ -67,29 +71,28 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-
-        // Compute required framebuffer scaling
-        float scale = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
-
-        char *eggString = intToString(eggTexture.width);
-        // Calculate the position to center the cat texture
-
+        initNightSkyPosition(&nightSky);
+        initGrassPosition(&grass);
         initEggPosition(&egg);
         initMoonPosition(&moon);
-        egg.x = 0;
-        egg.y = 0;
-        // moon.x = 0;
-        // moon.y = 0;
-    float a = MIN((float)GetScreenWidth() / gameScreenWidth, (float)GetScreenHeight() / gameScreenHeight);
+        initSunPosition(&sun);
 
-    UpdateMoonPosition(&moon, screenWidth, screenHeight, 256);
+        UpdateMoonPosition(&moon, screenWidth, screenHeight, 320);
+        UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
+        
+        char* test = floatToString(getScale(), 2);
+
+        DrawText(test, 0, 0, 1, RED);
         ClearBackground(RAYWHITE); // Clear render texture background color
+        renderNightSky(nightSky);
+        renderGrass(grass);
         renderEgg(egg);
         renderMoon(&moon, screenHeight);
+        renderSun(&sun, screenHeight);
         EndTextureMode();
 
         BeginDrawing();
@@ -133,6 +136,8 @@ int main(void)
     UnloadTexture(target.texture);
     UnloadTexture(eggTexture);
     UnloadTexture(moonTexture);
+    UnloadTexture(sunTexture);
+    UnloadTexture(grassTexture);
     CloseWindow();
     return 0;
 }

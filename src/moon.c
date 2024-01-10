@@ -36,11 +36,9 @@ moonStruct initMoon(Texture2D texture, int screenWidth, int screenHeight)
 
 void initMoonPosition(moonStruct *moon) {
           // Calculate scaling factors
-    float scaleX = (float)screenWidth / moon->texture.width;
-    float scaleY = (float)screenHeight / moon->texture.height;
     moon->position = (Vector2){
-        gameScreenWidth / 2 - (moon->texture.width * fminf(scaleX, scaleY)) / 2 + moon->x,
-        gameScreenHeight / 2 - (moon->texture.height * fminf(scaleX, scaleY)) / 2 + moon->y,
+        gameScreenWidth / 2 - (moon->texture.width * getScaleForTexture(moon->texture)) / 2 + moon->x,
+        gameScreenHeight / 2 - (moon->texture.height * getScaleForTexture(moon->texture)) / 2 + moon->y,
     };
 } 
 
@@ -66,8 +64,7 @@ void renderMoon(moonStruct *moon, int screenHeight)
                  // Calculate scaling factors
     float scaleX = (float)screenWidth / moon->texture.width;
     float scaleY = (float)screenHeight / moon->texture.height;
-    DrawTextureEx(moon->texture, moon->position, 0.0f, fminf(scaleX, scaleY), WHITE);
-        DrawTextureEx(moon->texture, moon->position, 0.0f,  fminf(scaleX, scaleY), WHITE);
+    DrawTextureEx(moon->texture, moon->position, 0.0f, getScaleForTexture(moon->texture), WHITE);
     // }
 }
 

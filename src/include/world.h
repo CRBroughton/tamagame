@@ -8,10 +8,18 @@
 typedef struct grassStruct
 {
     Texture2D texture;
-    Rectangle source;
-    Rectangle destination;
-    Vector2 origin;
+    Vector2 position;
+    int x;
+    int y;
 } grassStruct;
+
+typedef struct nightSkyStruct
+{
+    Texture2D texture;
+    Vector2 position;
+    int x;
+    int y;
+} nightSkyStruct;
 
 typedef struct worldStruct
 {
@@ -25,9 +33,14 @@ typedef struct worldStruct
 } worldStruct;
 
 Texture2D loadGrassTexture();
+Texture2D loadNightSkyTexture();
 worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight);
 grassStruct initGrass(Texture2D grass, int screenWidth, int screenHeight);
+nightSkyStruct initNightSky(Texture2D texture, int screenWidth, int screenHeight);
+void initGrassPosition(grassStruct *grass);
+void initNightSkyPosition(nightSkyStruct *nightSky);
 void renderGrass(grassStruct grass);
+void renderNightSky(nightSkyStruct nightSky);
 void updateDayCycle(worldStruct *world, int screenHeight);
 
 #endif // WORLD_H
