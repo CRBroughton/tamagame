@@ -64,7 +64,7 @@ void renderMoon(moonStruct *moon, int screenHeight)
                  // Calculate scaling factors
     float scaleX = (float)screenWidth / moon->texture.width;
     float scaleY = (float)screenHeight / moon->texture.height;
-    DrawTextureEx(moon->texture, moon->position, 0.0f, getScaleForTexture(moon->texture), WHITE);
+    DrawTextureEx(moon->texture, moon->position, 0.0f, getScaleForTexture(moon->texture) / 2, WHITE);
     // }
 }
 

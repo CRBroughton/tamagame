@@ -57,14 +57,14 @@ eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
 
 void renderEgg(eggStruct egg)
 {
-    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, getScaleForTexture(egg.texture), WHITE);
+    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, getScaleForTexture(egg.texture) / 2, WHITE);
 }
 
 void initEggPosition(eggStruct *egg)
 {
     egg->eggPosition = (Vector2){
-        gameScreenWidth / 2 - (egg->texture.width * getScaleForTexture(egg->texture)) / 2 + egg->x,
-        gameScreenHeight / 2 - (egg->texture.height * getScaleForTexture(egg->texture)) / 2 + egg->y,
+        gameScreenWidth / 2 - (egg->texture.width * getScaleForTexture(egg->texture)) / 4 + egg->x,
+        gameScreenHeight / 2 - (egg->texture.height * getScaleForTexture(egg->texture)) / 4 + egg->y,
     };
 }
 

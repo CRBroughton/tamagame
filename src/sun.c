@@ -59,7 +59,7 @@ void renderSun(sunStruct *sun, int screenHeight)
     //     DrawTexturePro(sun->texture, sun->source, destination, sun->origin, 0.0f, WHITE);
     // }
 
-    DrawTextureEx(sun->texture, sun->position, 0.0f, getScaleForTexture(sun->texture), WHITE);
+    DrawTextureEx(sun->texture, sun->position, 0.0f, getScaleForTexture(sun->texture) / 2, WHITE);
 }
 
 // Update the sun's position based on the circular path

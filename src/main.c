@@ -83,16 +83,12 @@ int main(void)
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
-        
-        char* test = floatToString(getScale(), 2);
-
-        DrawText(test, 0, 0, 1, RED);
         ClearBackground(RAYWHITE); // Clear render texture background color
         renderNightSky(nightSky);
-        renderGrass(grass);
-        renderEgg(egg);
         renderMoon(&moon, screenHeight);
         renderSun(&sun, screenHeight);
+        renderGrass(grass);
+        renderEgg(egg);
         EndTextureMode();
 
         BeginDrawing();
