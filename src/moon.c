@@ -71,7 +71,7 @@ void renderMoon(moonStruct *moon, int screenHeight)
 // Update the moon's position based on the circular path
 void UpdateMoonPosition(moonStruct *moon, int screenWidth, int screenHeight, int orbitRadius) {
     // TODO - set to 0.03f;
-    float speed = 1.53f;
+    float speed = 0.03f;
     moon->angle += speed * GetFrameTime();
     moon->x = orbitRadius * cosf(moon->angle);
     moon->y = orbitRadius * sinf(moon->angle);

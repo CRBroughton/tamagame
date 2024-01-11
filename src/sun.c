@@ -66,7 +66,7 @@ void renderSun(sunStruct *sun, int screenHeight)
 void UpdateSunPosition(sunStruct *sun, int screenWidth, int screenHeight, int orbitRadius)
 {
     // TODO - set to 0.03f;
-    float speed = 1.53f;
+    float speed = 0.03f;
     sun->angle += speed * GetFrameTime();
     sun->x = orbitRadius * cosf(sun->angle);
     sun->y = orbitRadius * sinf(sun->angle);

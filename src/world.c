@@ -10,9 +10,9 @@
 
 Texture2D loadGrassTexture()
 {
-    Texture2D grass = LoadTexture("resources/Grass.png");
+    Texture2D texture = LoadTexture("resources/Grass.png");
 
-    return grass;
+    return texture;
 };
 
 Texture2D loadNightSkyTexture()
@@ -21,6 +21,30 @@ Texture2D loadNightSkyTexture()
 
     return texture;
 }
+
+Texture2D loadWarmthTexture()
+{
+    Texture2D texture = LoadTexture("resources/UI_Bar.png");
+
+    return texture;
+}
+
+uiBar initWarmthBar(Texture2D texture)
+{
+    int x = 0;
+    int y = 0;
+    Vector2 position = (Vector2){
+        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
+        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
+    };
+    struct uiBar uiBar = {
+        texture,
+        position,
+        x,
+        y};
+
+    return uiBar;
+};
 
 grassStruct initGrass(Texture2D texture, int screenWidth, int screenHeight)
 {
@@ -58,6 +82,18 @@ nightSkyStruct initNightSky(Texture2D texture, int screenWidth, int screenHeight
     return nightSkyStruct;
 }
 
+
+void initWarmthBarPosition(uiBar *warmth)
+{
+    warmth->position = (Vector2){
+        gameScreenWidth / 2 - (warmth->texture.width * getScaleForTexture(warmth->texture)) / 2 + warmth->x,
+        gameScreenHeight / 2 - (warmth->texture.height * getScaleForTexture(warmth->texture)) / 2 + warmth->y,
+    };
+
+    warmth->x = -256 + (warmth->texture.width / 2) + 15;
+    warmth->y = -256 + (warmth->texture.width / 2) + 75;
+}
+
 void initGrassPosition(grassStruct *grass)
 {
     grass->position = (Vector2){
@@ -78,7 +114,6 @@ void initNightSkyPosition(nightSkyStruct *nightSky)
 
     nightSky->x = -256 + (nightSky->texture.width / 2);
     nightSky->y = -256 + 30;
-
 }
 
 void renderGrass(grassStruct grass)
@@ -91,6 +126,13 @@ void renderNightSky(nightSkyStruct nightSky)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(nightSky.texture, nightSky.position, 0.0f, getScaleForTexture(nightSky.texture) * 4, WHITE);
+}
+
+void renderWarmthBar(uiBar warmth)
+{
+    // 4 seems to be a 'magic number' for this
+    DrawTextureEx(warmth.texture, warmth.position, 0.0f, getScaleForTexture(warmth.texture), WHITE);
+
 }
 
 worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)

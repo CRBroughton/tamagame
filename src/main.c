@@ -8,24 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void draw(worldStruct *world, eggStruct egg, logStruct log, int screenHeight)
-{
-    // BeginDrawing();
-
-    // ClearBackground(RAYWHITE);
-
-    // renderGrass(world->grass);
-    // renderSun(&world->sun, screenHeight);
-    // renderMoon(&world->moon, screenHeight);
-    // renderEgg(egg);
-    // renderLog(log);
-
-    // drawEggHealthBar(&egg);
-    // drawEggWarmthBar(&egg);
-
-    // EndDrawing();
-}
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -46,21 +28,17 @@ int main(void)
     Texture2D sunTexture = loadSunTexture();
     Texture2D grassTexture = loadGrassTexture();
     Texture2D nightSkyTexture = loadNightSkyTexture();
+    Texture2D warmthBarTexture = loadWarmthTexture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
     moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
     sunStruct sun = initSun(sunTexture, screenWidth, screenHeight);
     grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
     nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
+    uiBar warmthBar = initWarmthBar(warmthBarTexture);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-    SetTextureFilter(target.texture, TEXTURE_FILTER_POINT); // Texture scale filter to use
-    // Texture2D grass = LoadTexture("resources/Grass.png");
-
-    // eggStruct egg = initEgg(screenWidth, screenHeight);
-    // worldStruct world = initWorld(screenWidth, screenHeight);
-
     // // TODO - Initialise an array of logs, from which only
     // // three can appear at a given time. Use probability function.
     // logStruct log = initLog(screenWidth, screenHeight);
@@ -76,9 +54,18 @@ int main(void)
         initEggPosition(&egg);
         initMoonPosition(&moon);
         initSunPosition(&sun);
+        initWarmthBarPosition(&warmthBar);
 
         UpdateMoonPosition(&moon, screenWidth, screenHeight, 320);
         UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
+
+        // movement solution with scaling support
+        // if (IsKeyDown(KEY_SPACE)) {
+        //    if (egg.x < 256 - egg.texture.width * getScale() / 2) {
+        //       egg.x +=1;
+        //    }
+        // }
+
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
@@ -89,6 +76,9 @@ int main(void)
         renderSun(&sun, screenHeight);
         renderGrass(grass);
         renderEgg(egg);
+        renderWarmthBar(warmthBar);
+        drawEggHealthBar(&egg, warmthBar);
+
         EndTextureMode();
 
         BeginDrawing();
@@ -125,10 +115,6 @@ int main(void)
         // }
     }
 
-    // UnloadTexture(egg.texture);
-    // UnloadTexture(world.moon.texture);
-    // UnloadTexture(world.sun.texture);
-    // UnloadTexture(log.texture);
     UnloadTexture(target.texture);
     UnloadTexture(eggTexture);
     UnloadTexture(moonTexture);
