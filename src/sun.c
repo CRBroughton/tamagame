@@ -2,33 +2,45 @@
 #include "include/world.h"
 #include "include/sun.h"
 #include "include/utils.h"
+#include "include/constants.h"
 
 #include <stdio.h>
 #include <math.h>
 
-sunStruct initSun(int screenWidth, int screenHeight)
+Texture2D loadSunTexture()
 {
     Texture2D texture = LoadTexture("resources/Sun.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = {0, 0, (float)texture.width, (float)texture.height};
-    Vector2 origin = {texture.width / 2, texture.height / 2};
+    return texture;
+}
 
+sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight)
+{
     int x = 0;
     int y = 0;
+    Vector2 position = (Vector2){
+        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
+        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
+    };
     float angle = 10.0f;
 
     sunStruct sunStruct = {
         texture,
-        source,
-        destination,
-        origin,
+        position,
         x,
         y,
         angle,
     };
 
     return sunStruct;
+}
+
+void initSunPosition(sunStruct *sun)
+{
+    sun->position = (Vector2){
+        gameScreenWidth / 2 - (sun->texture.width * getScaleForTexture(sun->texture)) / 2 + sun->x,
+        gameScreenHeight / 2 - (sun->texture.height * getScaleForTexture(sun->texture)) / 2 + sun->y,
+    };
 }
 
 bool isDay(sunStruct *sun, int screenHeight)
@@ -38,22 +50,18 @@ bool isDay(sunStruct *sun, int screenHeight)
 
 void renderSun(sunStruct *sun, int screenHeight)
 {
-    Rectangle destination = {
-        sun->x,
-        sun->y,
-        (float)sun->texture.width,
-        (float)sun->texture.height};
-    if (isDay(sun, screenHeight) == true) {
-        DrawTexturePro(sun->texture, sun->source, destination, sun->origin, 0.0f, WHITE);
+    if (isDay(sun, screenHeight) == true)
+    {
+        DrawTextureEx(sun->texture, sun->position, 0.0f, getScaleForTexture(sun->texture) / 2, WHITE);
     }
 }
 
 // Update the sun's position based on the circular path
-void UpdateSunPosition(sunStruct *sun, int screenWidth, int screenHeight, int orbitRadius) {
+void UpdateSunPosition(sunStruct *sun, int screenWidth, int screenHeight, int orbitRadius)
+{
     // TODO - set to 0.03f;
-    float speed = 0.53f;
+    float speed = 0.03f;
     sun->angle += speed * GetFrameTime();
-    sun->x = screenWidth / 2 + orbitRadius * cosf(sun->angle);
-    sun->y = screenHeight / 2 + orbitRadius * sinf(sun->angle);
+    sun->x = orbitRadius * cosf(sun->angle);
+    sun->y = orbitRadius * sinf(sun->angle);
 }
-

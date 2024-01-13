@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include "include/raylib.h"
+#include "include/constants.h"
+#include "utils.h"
 
 char *intToString(int number)
 {
@@ -45,4 +48,24 @@ int isFloatDivisible(float num, float divisor) {
     } else {
         return 0;  // The float is not divisible by the number
     }
+}
+
+Rectangle scaledRectangle(int width, int height)
+{
+    Rectangle scaledRectangle = {
+        (GetScreenWidth() - ((float)width * getTextureScaleFactor())) * 0.5f,
+        (GetScreenHeight() - ((float)height * getTextureScaleFactor())) * 0.5f,
+        (float)width * getTextureScaleFactor(),
+        (float)height * getTextureScaleFactor()};
+
+    return scaledRectangle;
+};
+
+
+
+float getScaleForTexture(Texture2D texture) {
+    float scaleX = (float)screenWidth / texture.width;
+    float scaleY = (float)screenHeight / texture.height;
+
+    return fminf(scaleX, scaleY);
 }

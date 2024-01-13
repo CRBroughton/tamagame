@@ -6,16 +6,16 @@
 typedef struct sunStruct
 {
     Texture2D texture;
-    Rectangle source;
-    Rectangle destination;
-    Vector2 origin;
+    Vector2 position;
     int x;
     int y;
     float angle;
 
 } sunStruct;
 
-sunStruct initSun(int screenWidth, int screenHeight);
+Texture2D loadSunTexture();
+sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight);
+void initSunPosition(sunStruct *sun);
 void renderSun(sunStruct *sun, int screenHeight);
 void UpdateSunPosition(sunStruct *entity, int screenWidth, int screenHeight, int orbitRadius);
 bool isDay(sunStruct *sun, int screenHeight);
