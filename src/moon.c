@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <math.h>
 
-Texture2D renderMoonTexture() {
+Texture2D renderMoonTexture()
+{
     Texture2D texture = LoadTexture("resources/Moon.png");
 
     return texture;
@@ -34,13 +35,13 @@ moonStruct initMoon(Texture2D texture, int screenWidth, int screenHeight)
     return moonStruct;
 }
 
-void initMoonPosition(moonStruct *moon) {
-          // Calculate scaling factors
+void initMoonPosition(moonStruct *moon)
+{
     moon->position = (Vector2){
         gameScreenWidth / 2 - (moon->texture.width * getScaleForTexture(moon->texture)) / 2 + moon->x,
         gameScreenHeight / 2 - (moon->texture.height * getScaleForTexture(moon->texture)) / 2 + moon->y,
     };
-} 
+}
 
 bool isNight(moonStruct *moon, int screenHeight)
 {
@@ -54,26 +55,18 @@ bool isNightAndMoonVisible(moonStruct *moon, int screenHeight)
 
 void renderMoon(moonStruct *moon, int screenHeight)
 {
-    // Rectangle destination = {
-    //     moon->x,
-    //     moon->y,
-    //     (float)moon->texture.width,
-    //     (float)moon->texture.height};
-    // if (isNight(moon, screenHeight) == true) {
-        // DrawTexturePro(moon->texture, moon->source, destination, moon->origin, 0.0f, WHITE);
-                 // Calculate scaling factors
-    float scaleX = (float)screenWidth / moon->texture.width;
-    float scaleY = (float)screenHeight / moon->texture.height;
-    DrawTextureEx(moon->texture, moon->position, 0.0f, getScaleForTexture(moon->texture) / 2, WHITE);
-    // }
+    if (isNight(moon, screenHeight) == true)
+    {
+        DrawTextureEx(moon->texture, moon->position, 0.0f, getScaleForTexture(moon->texture) / 2, WHITE);
+    }
 }
 
 // Update the moon's position based on the circular path
-void UpdateMoonPosition(moonStruct *moon, int screenWidth, int screenHeight, int orbitRadius) {
+void UpdateMoonPosition(moonStruct *moon, int screenWidth, int screenHeight, int orbitRadius)
+{
     // TODO - set to 0.03f;
     float speed = 0.03f;
     moon->angle += speed * GetFrameTime();
     moon->x = orbitRadius * cosf(moon->angle);
     moon->y = orbitRadius * sinf(moon->angle);
 }
-

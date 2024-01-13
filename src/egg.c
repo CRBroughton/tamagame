@@ -125,25 +125,23 @@ void increaseEggWarmth(eggStruct *egg)
     }
 }
 
-void drawEggHealthBar(eggStruct *egg, uiBar warmth)
+void drawEggWarmthBar(eggStruct *egg, uiBar warmth)
 {
-    // TODO - draw fancy outline
-    if (egg->health == 3)
+    if (egg->warmth == 3)
     {
         DrawRectangle(warmth.position.x + 3, warmth.position.y + 3, 10, warmth.texture.height * 3 + 3, RED);
     }
-    if (egg->health == 2)
+    if (egg->warmth == 2)
     {
-         DrawRectangle(warmth.position.x + 3, warmth.position.y + 3, 10, warmth.texture.height * 3 + 3, RED);
+         DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height, 10, warmth.texture.height * 2 + 3, RED);
     }
-    if (egg->health == 1)
+    if (egg->warmth == 1)
     {
-          DrawRectangle(warmth.position.x + 3, warmth.position.y + 3, 10, warmth.texture.height * 3 + 3, RED);
+          DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height * 2, 10, warmth.texture.height + 3, RED);
     }
-    DrawRectangle(11, 32, 3, 0, RED);
 }
 
-void drawEggWarmthBar(eggStruct *egg)
+void drawEggHealthBar(eggStruct *egg)
 {
     // TODO - draw fancy outline
     if (egg->warmth == 3)

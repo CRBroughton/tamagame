@@ -50,16 +50,10 @@ bool isDay(sunStruct *sun, int screenHeight)
 
 void renderSun(sunStruct *sun, int screenHeight)
 {
-    // Rectangle destination = {
-    //     sun->x,
-    //     sun->y,
-    //     (float)sun->texture.width,
-    //     (float)sun->texture.height};
-    // if (isDay(sun, screenHeight) == true) {
-    //     DrawTexturePro(sun->texture, sun->source, destination, sun->origin, 0.0f, WHITE);
-    // }
-
-    DrawTextureEx(sun->texture, sun->position, 0.0f, getScaleForTexture(sun->texture) / 2, WHITE);
+    if (isDay(sun, screenHeight) == true)
+    {
+        DrawTextureEx(sun->texture, sun->position, 0.0f, getScaleForTexture(sun->texture) / 2, WHITE);
+    }
 }
 
 // Update the sun's position based on the circular path

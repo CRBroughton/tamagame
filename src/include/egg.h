@@ -25,7 +25,7 @@ void initEggPosition(eggStruct *egg);
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer);
 void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer);
 void increaseEggWarmth(eggStruct *egg);
-void drawEggHealthBar(eggStruct *egg, uiBar warmth);
-void drawEggWarmthBar(eggStruct *egg);
+void drawEggHealthBar(eggStruct *egg);
+void drawEggWarmthBar(eggStruct *egg, uiBar warmth);
 void animateEgg(eggStruct *egg, float speed, int screenWidth);
 #endif // EGG_H

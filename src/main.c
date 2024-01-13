@@ -77,7 +77,7 @@ int main(void)
         renderGrass(grass);
         renderEgg(egg);
         renderWarmthBar(warmthBar);
-        drawEggHealthBar(&egg, warmthBar);
+        drawEggWarmthBar(&egg, warmthBar);
 
         EndTextureMode();
 
