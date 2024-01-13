@@ -29,6 +29,7 @@ int main(void)
     Texture2D grassTexture = loadGrassTexture();
     Texture2D nightSkyTexture = loadNightSkyTexture();
     Texture2D warmthBarTexture = loadWarmthTexture();
+    Texture2D clouds1Texture = loadCloud1Texture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
     moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
@@ -36,6 +37,7 @@ int main(void)
     grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
     nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
+    clouds clouds1 = initClouds1(clouds1Texture);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -55,9 +57,16 @@ int main(void)
         initMoonPosition(&moon);
         initSunPosition(&sun);
         initWarmthBarPosition(&warmthBar);
+        initClouds1Position(&clouds1);
 
         UpdateMoonPosition(&moon, screenWidth, screenHeight, 320);
         UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
+        clouds1.x -= 1;
+
+        if (clouds1.x < -300) {
+            clouds1.x = 500;
+        };
+
 
         // movement solution with scaling support
         // if (IsKeyDown(KEY_SPACE)) {
@@ -74,6 +83,7 @@ int main(void)
         renderNightSky(nightSky);
         renderMoon(&moon, screenHeight);
         renderSun(&sun, screenHeight);
+        renderClouds1(clouds1);
         renderGrass(grass);
         renderEgg(egg);
         renderWarmthBar(warmthBar);
@@ -120,6 +130,7 @@ int main(void)
     UnloadTexture(moonTexture);
     UnloadTexture(sunTexture);
     UnloadTexture(grassTexture);
+    UnloadTexture(clouds1Texture);
     CloseWindow();
     return 0;
 }

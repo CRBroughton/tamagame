@@ -29,6 +29,30 @@ Texture2D loadWarmthTexture()
     return texture;
 }
 
+Texture2D loadCloud1Texture()
+{
+    Texture2D texture = LoadTexture("resources/Clouds1.png");
+
+    return texture;
+}
+
+clouds initClouds1(Texture2D texture)
+{
+    int x = -256 + (texture.width / 2);
+    int y = -256 + (texture.height / 2);
+    Vector2 position = (Vector2){
+        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
+        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
+    };
+    struct clouds clouds = {
+        texture,
+        position,
+        x,
+        y};
+
+    return clouds;
+}
+
 uiBar initWarmthBar(Texture2D texture)
 {
     int x = 0;
@@ -83,6 +107,14 @@ nightSkyStruct initNightSky(Texture2D texture, int screenWidth, int screenHeight
 }
 
 
+void initClouds1Position(clouds *clouds)
+{
+    clouds->position = (Vector2){
+        gameScreenWidth / 2 - (clouds->texture.width * getScaleForTexture(clouds->texture)) / 2 + clouds->x,
+        gameScreenHeight / 2 - (clouds->texture.height * getScaleForTexture(clouds->texture)) / 2 + clouds->y,
+    };
+}
+
 void initWarmthBarPosition(uiBar *warmth)
 {
     warmth->position = (Vector2){
@@ -132,7 +164,11 @@ void renderWarmthBar(uiBar warmth)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(warmth.texture, warmth.position, 0.0f, getScaleForTexture(warmth.texture), WHITE);
+}
 
+void renderClouds1(clouds clouds)
+{
+    DrawTextureEx(clouds.texture, clouds.position, 0.0f, getScaleForTexture(clouds.texture) * 4, WHITE);
 }
 
 worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)

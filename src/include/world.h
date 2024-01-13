@@ -40,20 +40,32 @@ typedef struct uiBar
     int y;
 } uiBar;
 
+typedef struct clouds
+{
+    Texture2D texture;
+    Vector2 position;
+    int x;
+    int y;
+} clouds;
+
 Texture2D loadGrassTexture();
 Texture2D loadNightSkyTexture();
 Texture2D loadWarmthTexture();
+Texture2D loadCloud1Texture();
 worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight);
 uiBar initWarmthBar(Texture2D texture);
 grassStruct initGrass(Texture2D grass, int screenWidth, int screenHeight);
 nightSkyStruct initNightSky(Texture2D texture, int screenWidth, int screenHeight);
+clouds initClouds1(Texture2D texture);
 uiBar initWarmthBar(Texture2D texture);
 void initWarmthBarPosition(uiBar *warth);
 void initGrassPosition(grassStruct *grass);
 void initNightSkyPosition(nightSkyStruct *nightSky);
+void initClouds1Position(clouds *clouds);
 void renderGrass(grassStruct grass);
 void renderNightSky(nightSkyStruct nightSky);
 void renderWarmthBar(uiBar warmth);
+void renderClouds1(clouds clouds);
 void updateDayCycle(worldStruct *world, int screenHeight);
 
 #endif // WORLD_H
