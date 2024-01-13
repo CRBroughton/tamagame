@@ -123,7 +123,7 @@ void initWarmthBarPosition(uiBar *warmth)
     };
 
     warmth->x = -256 + (warmth->texture.width / 2) + 15;
-    warmth->y = -256 + (warmth->texture.width / 2) + 75;
+    warmth->y = -256 + (warmth->texture.height / 2) + 55;
 }
 
 void initGrassPosition(grassStruct *grass)
