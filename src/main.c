@@ -32,6 +32,8 @@ int main(void)
     Texture2D warmthBarTexture = loadWarmthTexture();
     Texture2D clouds1Texture = loadCloud1Texture();
     Texture2D creatureTexture = loadCreatureTexture();
+    Texture2D creatureLeftTexture = loadCreatureLeftTexture();
+    Texture2D createRightTexture = loadCreatureRightTexture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
     moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
@@ -40,7 +42,7 @@ int main(void)
     nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
-    creatureStruct creature = initCreature(creatureTexture);
+    creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -67,12 +69,12 @@ int main(void)
         UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
         clouds1.x -= 1;
 
-        if (clouds1.x < -300) {
+        if (clouds1.x < -300)
+        {
             clouds1.x = 500;
         };
 
         updateCreature(&creature);
-
 
         // movement solution with scaling support
         // if (IsKeyDown(KEY_SPACE)) {

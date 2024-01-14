@@ -14,7 +14,21 @@ Texture2D loadCreatureTexture()
     return texture;
 }
 
-creatureStruct initCreature(Texture2D texture)
+Texture2D loadCreatureLeftTexture()
+{
+    Texture2D texture = LoadTexture("resources/CreatureLeftSpriteSheet.png");
+
+    return texture;
+}
+
+Texture2D loadCreatureRightTexture()
+{
+    Texture2D texture = LoadTexture("resources/CreatureRightSpriteSheet.png");
+
+    return texture;
+}
+
+creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
 {
     int x = 0;
     int y = -20;
@@ -34,6 +48,8 @@ creatureStruct initCreature(Texture2D texture)
 
     struct creatureStruct creatureStruct = {
         texture,
+        left,
+        right,
         position,
         x,
         y,
@@ -57,6 +73,39 @@ void initcreaturePosition(creatureStruct *creature)
 
 void renderCreature(creatureStruct *creature)
 {
+    if (IsKeyDown(KEY_A))
+    {
+        DrawTexturePro(
+            creature->left,
+            creature->frameRec,
+            (Rectangle){
+                creature->position.x,
+                creature->position.y,
+                creature->frameRec.width * 3,
+                creature->frameRec.height * 3},
+            (Vector2){0, 0},
+            0.0f,
+            WHITE);
+        
+            return;
+    }
+
+        if (IsKeyDown(KEY_D))
+    {
+        DrawTexturePro(
+            creature->right,
+            creature->frameRec,
+            (Rectangle){
+                creature->position.x,
+                creature->position.y,
+                creature->frameRec.width * 3,
+                creature->frameRec.height * 3},
+            (Vector2){0, 0},
+            0.0f,
+            WHITE);
+        
+            return;
+    }
 
     DrawTexturePro(
         creature->texture,

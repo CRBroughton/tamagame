@@ -7,6 +7,8 @@
 typedef struct creatureStruct
 {
     Texture2D texture;
+    Texture2D left;
+    Texture2D right;
     Vector2 position;
     int x;
     int y;
@@ -17,7 +19,9 @@ typedef struct creatureStruct
 } creatureStruct;
 
 Texture2D loadCreatureTexture();
-creatureStruct initCreature(Texture2D texture);
+Texture2D loadCreatureLeftTexture();
+Texture2D loadCreatureRightTexture();
+creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right);
 void initcreaturePosition(creatureStruct *creature);
 void renderCreature(creatureStruct *creature);
 void updateCreature(creatureStruct * creature);
