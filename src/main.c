@@ -2,6 +2,7 @@
 #include "include/egg.h"
 #include "include/world.h"
 #include "include/log.h"
+#include "include/creature.h"
 #include "include/utils.h"
 #include "include/constants.h"
 
@@ -30,6 +31,7 @@ int main(void)
     Texture2D nightSkyTexture = loadNightSkyTexture();
     Texture2D warmthBarTexture = loadWarmthTexture();
     Texture2D clouds1Texture = loadCloud1Texture();
+    Texture2D creatureTexture = loadCreatureTexture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
     moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
@@ -38,6 +40,7 @@ int main(void)
     nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
+    creatureStruct creature = initCreature(creatureTexture);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -58,6 +61,7 @@ int main(void)
         initSunPosition(&sun);
         initWarmthBarPosition(&warmthBar);
         initClouds1Position(&clouds1);
+        initcreaturePosition(&creature);
 
         UpdateMoonPosition(&moon, screenWidth, screenHeight, 320);
         UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
@@ -66,6 +70,8 @@ int main(void)
         if (clouds1.x < -300) {
             clouds1.x = 500;
         };
+
+        updateCreature(&creature);
 
 
         // movement solution with scaling support
@@ -86,6 +92,7 @@ int main(void)
         renderClouds1(clouds1);
         renderGrass(grass);
         renderEgg(egg);
+        renderCreature(&creature);
         renderWarmthBar(warmthBar);
         drawEggWarmthBar(&egg, warmthBar);
 
