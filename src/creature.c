@@ -135,3 +135,16 @@ void updateCreature(creatureStruct *creature)
         creature->frameRec.x = (float)creature->currentFrame * (float)creature->texture.width / 2;
     }
 }
+
+void moveCreature(creatureStruct *creature)
+{
+    bool isLeftSideScreen = creature->x <= -256 + creature->texture.width * getScaleForTexture(creature->texture) / 4 ;
+    bool isRightSideScreen = creature->x >= (256 + 8) - creature->texture.width * 
+    getScaleForTexture(creature->texture) / 4;
+    if (IsKeyDown(KEY_D) && !isRightSideScreen) {
+        creature->x += 1;
+    }
+    if (IsKeyDown(KEY_A) && !isLeftSideScreen) {
+        creature->x -= 1;
+    }
+}

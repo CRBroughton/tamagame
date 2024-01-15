@@ -25,4 +25,5 @@ creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right);
 void initcreaturePosition(creatureStruct *creature);
 void renderCreature(creatureStruct *creature);
 void updateCreature(creatureStruct * creature);
+void moveCreature(creatureStruct *creature);
 #endif // CREATURE_H

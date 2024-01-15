@@ -75,6 +75,7 @@ int main(void)
         };
 
         updateCreature(&creature);
+        moveCreature(&creature);
 
         // movement solution with scaling support
         // if (IsKeyDown(KEY_SPACE)) {
@@ -97,7 +98,6 @@ int main(void)
         renderCreature(&creature);
         renderWarmthBar(warmthBar);
         drawEggWarmthBar(&egg, warmthBar);
-
         EndTextureMode();
 
         BeginDrawing();
