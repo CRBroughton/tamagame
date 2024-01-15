@@ -18,10 +18,7 @@ sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight)
 {
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     float angle = 10.0f;
 
     sunStruct sunStruct = {
@@ -38,8 +35,8 @@ sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight)
 void initSunPosition(sunStruct *sun)
 {
     sun->position = (Vector2){
-        gameScreenWidth / 2 - (sun->texture.width * getScaleForTexture(sun->texture)) / 2 + sun->x,
-        gameScreenHeight / 2 - (sun->texture.height * getScaleForTexture(sun->texture)) / 2 + sun->y,
+        gameScreenWidth / 2 - sun->texture.width * getScaleForTexture(sun->texture) / 2 + sun->x,
+        gameScreenHeight / 2 - sun->texture.height * getScaleForTexture(sun->texture) / 2 + sun->y,
     };
 }
 

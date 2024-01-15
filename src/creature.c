@@ -38,10 +38,7 @@ creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
         (float)texture.width / 2,
         (float)texture.height,
     };
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - frameRec.width * getScaleForTexture(texture) / 2 + x,
-        gameScreenHeight / 2 - frameRec.height * getScaleForTexture(texture) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     int frameCounter = 0;
     int frameSpeed = 1;
     int currentFrame = 0;
@@ -58,7 +55,6 @@ creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
         currentFrame,
         frameRec,
     };
-    frameRec.x = (float)currentFrame * (float)texture.width / 6;
 
     return creatureStruct;
 };
