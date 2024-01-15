@@ -31,20 +31,20 @@ Texture2D loadCreatureRightTexture()
 creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
 {
     int x = 0;
-    int y = -20;
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
-    int frameCounter = 0;
-    int frameSpeed = 1;
-    int currentFrame = 0;
+    int y = 0;
     Rectangle frameRec = {
         0.0f,
         0.0f,
         (float)texture.width / 2,
         (float)texture.height,
     };
+    Vector2 position = (Vector2){
+        gameScreenWidth / 2 - frameRec.width * getScaleForTexture(texture) / 2 + x,
+        gameScreenHeight / 2 - frameRec.height * getScaleForTexture(texture) / 2 + y,
+    };
+    int frameCounter = 0;
+    int frameSpeed = 1;
+    int currentFrame = 0;
 
     struct creatureStruct creatureStruct = {
         texture,
@@ -66,8 +66,8 @@ creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
 void initcreaturePosition(creatureStruct *creature)
 {
     creature->position = (Vector2){
-        gameScreenWidth / 2 - (creature->texture.width * getScaleForTexture(creature->texture)) / 4 + creature->x,
-        gameScreenHeight / 2 - (creature->texture.height * getScaleForTexture(creature->texture)) / 4 + creature->y,
+        gameScreenWidth / 2 - creature->frameRec.width * getScaleForTexture(creature->texture) / 2 + creature->x,
+        gameScreenHeight / 2 - creature->frameRec.height * getScaleForTexture(creature->texture) / 2 + creature->y,
     };
 }
 
@@ -81,16 +81,16 @@ void renderCreature(creatureStruct *creature)
             (Rectangle){
                 creature->position.x,
                 creature->position.y,
-                creature->frameRec.width * 3,
-                creature->frameRec.height * 3},
+                creature->frameRec.width * getScaleForTexture(creature->texture),
+                creature->frameRec.height * getScaleForTexture(creature->texture)},
             (Vector2){0, 0},
             0.0f,
             WHITE);
-        
-            return;
+
+        return;
     }
 
-        if (IsKeyDown(KEY_D))
+    if (IsKeyDown(KEY_D))
     {
         DrawTexturePro(
             creature->right,
@@ -98,13 +98,13 @@ void renderCreature(creatureStruct *creature)
             (Rectangle){
                 creature->position.x,
                 creature->position.y,
-                creature->frameRec.width * 3,
-                creature->frameRec.height * 3},
+                creature->frameRec.width * getScaleForTexture(creature->texture),
+                creature->frameRec.height * getScaleForTexture(creature->texture)},
             (Vector2){0, 0},
             0.0f,
             WHITE);
-        
-            return;
+
+        return;
     }
 
     DrawTexturePro(
@@ -113,8 +113,8 @@ void renderCreature(creatureStruct *creature)
         (Rectangle){
             creature->position.x,
             creature->position.y,
-            creature->frameRec.width * 3,
-            creature->frameRec.height * 3},
+            creature->frameRec.width * getScaleForTexture(creature->texture),
+            creature->frameRec.height * getScaleForTexture(creature->texture)},
         (Vector2){0, 0},
         0.0f,
         WHITE);
@@ -138,13 +138,15 @@ void updateCreature(creatureStruct *creature)
 
 void moveCreature(creatureStruct *creature)
 {
-    bool isLeftSideScreen = creature->x <= -256 + creature->texture.width * getScaleForTexture(creature->texture) / 4 ;
-    bool isRightSideScreen = creature->x >= (256 + 8) - creature->texture.width * 
-    getScaleForTexture(creature->texture) / 4;
-    if (IsKeyDown(KEY_D) && !isRightSideScreen) {
+    bool isLeftSideScreen = creature->x <= -256 + creature->texture.width * getScaleForTexture(creature->texture) / 4;
+    bool isRightSideScreen = creature->x >= 256 - creature->texture.width *
+                                                            getScaleForTexture(creature->texture) / 4;
+    if (IsKeyDown(KEY_D) && !isRightSideScreen)
+    {
         creature->x += 1;
     }
-    if (IsKeyDown(KEY_A) && !isLeftSideScreen) {
+    if (IsKeyDown(KEY_A) && !isLeftSideScreen)
+    {
         creature->x -= 1;
     }
 }
