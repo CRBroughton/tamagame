@@ -14,7 +14,7 @@ Texture2D loadSunTexture()
     return texture;
 }
 
-sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight)
+sunStruct initSun(Texture2D texture)
 {
     int x = 0;
     int y = 0;

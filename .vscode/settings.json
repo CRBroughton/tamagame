@@ -47,7 +47,8 @@
         "egg.h": "c",
         "world.h": "c",
         "raylib.h": "c",
-        "utils.h": "c"
+        "utils.h": "c",
+        "log.h": "c"
     },
     "C_Cpp.errorSquiggles": "enabled"
 }

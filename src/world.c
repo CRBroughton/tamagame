@@ -70,7 +70,7 @@ uiBar initWarmthBar(Texture2D texture)
     return uiBar;
 };
 
-grassStruct initGrass(Texture2D texture, int screenWidth, int screenHeight)
+grassStruct initGrass(Texture2D texture)
 {
 
     int x = 0;
@@ -88,7 +88,7 @@ grassStruct initGrass(Texture2D texture, int screenWidth, int screenHeight)
     return grassStruct;
 }
 
-nightSkyStruct initNightSky(Texture2D texture, int screenWidth, int screenHeight)
+nightSkyStruct initNightSky(Texture2D texture)
 {
 
     int x = 0;
@@ -171,12 +171,13 @@ void renderClouds1(clouds clouds)
     DrawTextureEx(clouds.texture, clouds.position, 0.0f, getScaleForTexture(clouds.texture) * 4, WHITE);
 }
 
-worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)
+worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D sunTexture, Texture2D nightSkyTexture)
 {
-    moonStruct moon = initMoon(grassTexture, screenWidth, screenHeight);
-    sunStruct sun = initSun(grassTexture, screenWidth, screenHeight);
+    grassStruct grass = initGrass(grassTexture);
+    moonStruct moon = initMoon(moonTexture);
+    sunStruct sun = initSun(sunTexture);
+    nightSkyStruct nightSky = initNightSky(nightSkyTexture);
 
-    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
     bool night = true;
     bool day = false;
     int warmth = 3;
@@ -186,6 +187,7 @@ worldStruct initWorld(Texture2D grassTexture, int screenWidth, int screenHeight)
         moon,
         sun,
         grass,
+        nightSky,
         night,
         day,
         warmth,

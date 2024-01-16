@@ -13,7 +13,7 @@ Texture2D renderMoonTexture()
     return texture;
 }
 
-moonStruct initMoon(Texture2D texture, int screenWidth, int screenHeight)
+moonStruct initMoon(Texture2D texture)
 {
 
     int x = 0;

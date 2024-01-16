@@ -14,7 +14,7 @@ typedef struct sunStruct
 } sunStruct;
 
 Texture2D loadSunTexture();
-sunStruct initSun(Texture2D texture, int screenWidth, int screenHeight);
+sunStruct initSun(Texture2D texture);
 void initSunPosition(sunStruct *sun);
 void renderSun(sunStruct *sun, int screenHeight);
 void UpdateSunPosition(sunStruct *entity, int screenWidth, int screenHeight, int orbitRadius);

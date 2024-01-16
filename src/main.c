@@ -36,10 +36,8 @@ int main(void)
     Texture2D createRightTexture = loadCreatureRightTexture();
 
     eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
-    moonStruct moon = initMoon(moonTexture, screenWidth, screenHeight);
-    sunStruct sun = initSun(sunTexture, screenWidth, screenHeight);
-    grassStruct grass = initGrass(grassTexture, screenWidth, screenHeight);
-    nightSkyStruct nightSky = initNightSky(nightSkyTexture, screenWidth, screenHeight);
+    worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture);
+
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
@@ -56,17 +54,17 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
-        initNightSkyPosition(&nightSky);
-        initGrassPosition(&grass);
+        initNightSkyPosition(&world.nightSky);
+        initGrassPosition(&world.grass);
         initEggPosition(&egg);
-        initMoonPosition(&moon);
-        initSunPosition(&sun);
+        initMoonPosition(&world.moon);
+        initSunPosition(&world.sun);
         initWarmthBarPosition(&warmthBar);
         initClouds1Position(&clouds1);
         initcreaturePosition(&creature);
 
-        UpdateMoonPosition(&moon, screenWidth, screenHeight, 320);
-        UpdateSunPosition(&sun, screenWidth, screenHeight, 320);
+        UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 320);
+        UpdateSunPosition(&world.sun, screenWidth, screenHeight, 320);
         clouds1.x -= 1;
 
         if (clouds1.x < -300)
@@ -77,23 +75,16 @@ int main(void)
         updateCreature(&creature);
         moveCreature(&creature);
 
-        // movement solution with scaling support
-        // if (IsKeyDown(KEY_SPACE)) {
-        //    if (egg.x < 256 - egg.texture.width * getScale() / 2) {
-        //       egg.x +=1;
-        //    }
-        // }
-
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
-        renderNightSky(nightSky);
-        renderMoon(&moon, screenHeight);
-        renderSun(&sun, screenHeight);
+        renderNightSky(world.nightSky);
+        renderMoon(&world.moon, screenHeight);
+        renderSun(&world.sun, screenHeight);
         renderClouds1(clouds1);
-        renderGrass(grass);
+        renderGrass(world.grass);
         renderEgg(egg);
         renderCreature(&creature);
         renderWarmthBar(warmthBar);
