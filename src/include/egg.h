@@ -19,7 +19,7 @@ typedef struct eggStruct
 } eggStruct;
 
 Texture2D loadEggTexture();
-eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight);
+eggStruct initEgg(Texture2D texture);
 void renderEgg(eggStruct egg);
 void initEggPosition(eggStruct *egg);
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer);

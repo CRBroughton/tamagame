@@ -15,7 +15,7 @@ Texture2D loadEggTexture()
     return texture;
 }
 
-eggStruct initEgg(Texture2D texture, int screenWidth, int screenHeight)
+eggStruct initEgg(Texture2D texture)
 {
     int eggx = 0;
     int eggy = 0;

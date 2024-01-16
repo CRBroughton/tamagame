@@ -35,7 +35,7 @@ int main(void)
     Texture2D creatureLeftTexture = loadCreatureLeftTexture();
     Texture2D createRightTexture = loadCreatureRightTexture();
 
-    eggStruct egg = initEgg(eggTexture, screenWidth, screenHeight);
+    eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture);
 
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
