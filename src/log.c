@@ -52,6 +52,7 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
 }
 
 bool spawnNewLog(worldStruct *world, logStruct *log) {
+    return true;
     if (log->isClicked == false) {
         return false;
     }

@@ -77,16 +77,22 @@ int main(void)
         updateCreature(&creature);
         moveCreature(&creature);
 
+        if (spawnNewLog(&world, &log) == true)
+        {
+            // TODO - Move probability of log spawning to world
+            // And randomly show a log in the log array
+            LogPosition newPosition = getRandomLogPosition();
+            log.isClicked = false;
+            log.position = (Vector2){
+                gameScreenWidth / 2 - log.texture.width * getScaleForTexture(log.texture) / 4 + newPosition.x,
+                gameScreenHeight / 2 - log.texture.height * getScaleForTexture(log.texture) / 4 + newPosition.y,
+            };
+        }
 
-        spawnNewLog(&world, &log);
-        attemptToUseLog(GetMousePosition(), (Rectangle){
-            log.position.x, 
-            log.position.y, 
-            log.texture.width, 
-            log.texture.height}, 
-            &egg, 
-            &log, 
-            &world);
+        attemptToUseLog(GetMousePosition(), (Rectangle){log.position.x, log.position.y, log.texture.width, log.texture.height},
+                        &egg,
+                        &log,
+                        &world);
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -99,10 +105,14 @@ int main(void)
         renderClouds1(clouds1);
         renderGrass(world.grass);
         renderEgg(egg);
+        if (spawnNewLog(&world, &log) == true)
+        {
+            renderLog(log);
+        }
         renderCreature(&creature);
         renderWarmthBar(warmthBar);
         drawEggWarmthBar(&egg, warmthBar);
-        renderLog(log);
+
         EndTextureMode();
 
         BeginDrawing();
@@ -117,7 +127,6 @@ int main(void)
         EndDrawing();
 
         // TODO - Migrate all the below to above.
-
 
         // reduceEggWarmth(&egg, &world, &warmthTimer);
         // updateDayCycle(&world, screenHeight);
