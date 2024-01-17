@@ -8,9 +8,7 @@
 typedef struct logStruct
 {
     Texture2D texture;
-    Rectangle source;
-    Rectangle destination;
-    Vector2 origin;
+    Vector2 position;
     bool isClicked;
 
 } logStruct;
@@ -21,7 +19,8 @@ typedef struct LogPosition {
     int y;
 } LogPosition;
 
-logStruct initLog(int screenWidth, int screenHeight);
+Texture2D loadLogTexture();
+logStruct initLog(Texture2D texture);
 void renderLog(logStruct log);
 void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);
 bool spawnNewLog(worldStruct *world, logStruct *log);

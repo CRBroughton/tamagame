@@ -2,24 +2,28 @@
 #include "include/world.h"
 #include "include/log.h"
 #include "include/egg.h"
+#include "include/utils.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-logStruct initLog(int screenWidth, int screenHeight)
+Texture2D loadLogTexture()
 {
     Texture2D texture = LoadTexture("resources/Log.png");
 
-    Rectangle source = {0.0f, 0.0f, (float)texture.width, (float)texture.height};
-    Rectangle destination = {screenWidth / 2 + 10, screenHeight / 2 + 10, texture.width, texture.height};
+    return texture;
+}
 
+logStruct initLog(Texture2D texture)
+{
     bool isClicked = false;
+
+    Vector2 position = (Vector2){0,0};
 
     logStruct logStruct = {
         texture,
-        source,
-        destination,
+        position,
         isClicked,
     };
 
@@ -30,7 +34,8 @@ void renderLog(logStruct log)
 {
     if (log.isClicked == false)
     {
-        DrawTexturePro(log.texture, log.source, log.destination, log.origin, 0.0f, WHITE);
+        // DrawTexturePro(log.texture, log.source, log.destination, log.origin, 0.0f, WHITE);
+        DrawTextureEx(log.texture, log.position, 0.0f, getScaleForTexture(log.texture) / 2, WHITE);
     }
 }
 

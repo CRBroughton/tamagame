@@ -34,6 +34,7 @@ int main(void)
     Texture2D creatureTexture = loadCreatureTexture();
     Texture2D creatureLeftTexture = loadCreatureLeftTexture();
     Texture2D createRightTexture = loadCreatureRightTexture();
+    Texture2D logTexture = loadLogTexture();
 
     eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture);
@@ -41,6 +42,7 @@ int main(void)
     uiBar warmthBar = initWarmthBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
+    logStruct log = initLog(logTexture);
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
@@ -75,6 +77,17 @@ int main(void)
         updateCreature(&creature);
         moveCreature(&creature);
 
+
+        spawnNewLog(&world, &log);
+        attemptToUseLog(GetMousePosition(), (Rectangle){
+            log.position.x, 
+            log.position.y, 
+            log.texture.width, 
+            log.texture.height}, 
+            &egg, 
+            &log, 
+            &world);
+
         // Draw
         //----------------------------------------------------------------------------------
         // Draw everything in the render texture, note this will not be rendered on screen, yet
@@ -89,6 +102,7 @@ int main(void)
         renderCreature(&creature);
         renderWarmthBar(warmthBar);
         drawEggWarmthBar(&egg, warmthBar);
+        renderLog(log);
         EndTextureMode();
 
         BeginDrawing();
@@ -104,11 +118,6 @@ int main(void)
 
         // TODO - Migrate all the below to above.
 
-        // TODO - Create world state for moon/sun/heat/etc
-        // TODO - Create moon + sun orbits
-        // Color night = {63, 63, 116, 255};
-        // DrawRectangle(0, 0, screenWidth, screenHeight, night);
-        // attemptToUseLog(GetMousePosition(), (Rectangle){log.destination.x, log.destination.y, log.texture.width, log.texture.height}, &egg, &log, &world);
 
         // reduceEggWarmth(&egg, &world, &warmthTimer);
         // updateDayCycle(&world, screenHeight);
