@@ -46,9 +46,6 @@ int main(void)
 
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
-    // // TODO - Initialise an array of logs, from which only
-    // // three can appear at a given time. Use probability function.
-    // logStruct log = initLog(screenWidth, screenHeight);
 
     SetTargetFPS(60);
     double warmthTimer = GetTime();
@@ -125,22 +122,6 @@ int main(void)
                        (Vector2){0, 0}, 0.0f, WHITE);
 
         EndDrawing();
-
-        // TODO - Migrate all the below to above.
-
-        // reduceEggWarmth(&egg, &world, &warmthTimer);
-        // updateDayCycle(&world, screenHeight);
-        // UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 75);
-        // UpdateSunPosition(&world.sun, screenWidth, screenHeight, 75);
-        // if (spawnNewLog(&world, &log) == true)
-        // {
-        //     // TODO - Move probability of log spawning to world
-        //     // And randomly show a log in the log array
-        //     LogPosition newPosition = getRandomLogPosition();
-        //     log.isClicked = false;
-        //     log.destination.x = screenWidth / 2 + newPosition.x;
-        //     log.destination.y = screenHeight / 2 + newPosition.y;
-        // }
     }
 
     UnloadTexture(target.texture);
