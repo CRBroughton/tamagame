@@ -86,7 +86,11 @@ int main(void)
             };
         }
 
-        attemptToUseLog(GetMousePosition(), (Rectangle){log.position.x, log.position.y, log.texture.width, log.texture.height},
+        Vector2 virtualMouse = getVirtualMousePosition();
+        char* logX = intToString(log.position.x);
+        char* mouseX = intToString(virtualMouse.x);
+
+        attemptToUseLog(virtualMouse, (Rectangle){log.position.x, log.position.y, log.texture.width * getScaleForTexture(log.texture) / 2, log.texture.height * getScaleForTexture(log.texture) / 2},
                         &egg,
                         &log,
                         &world);
@@ -102,10 +106,7 @@ int main(void)
         renderClouds1(clouds1);
         renderGrass(world.grass);
         renderEgg(egg);
-        if (spawnNewLog(&world, &log) == true)
-        {
-            renderLog(log);
-        }
+        renderLog(log);
         renderCreature(&creature);
         renderWarmthBar(warmthBar);
         drawEggWarmthBar(&egg, warmthBar);
