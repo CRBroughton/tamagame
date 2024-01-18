@@ -18,7 +18,8 @@ char *intToString(int number)
     return result;
 }
 
-char* floatToString(float value, int precision) {
+char *floatToString(float value, int precision)
+{
     // Calculate the size needed for the string
     int size = snprintf(NULL, 0, "%.*f", precision, value);
 
@@ -31,22 +32,27 @@ char* floatToString(float value, int precision) {
     return result;
 }
 
-#define EPSILON 1e-6  // Adjust this epsilon value based on your precision requirements
-int isFloatDivisible(float num, float divisor) {
+#define EPSILON 1e-6 // Adjust this epsilon value based on your precision requirements
+int isFloatDivisible(float num, float divisor)
+{
     // Check if divisor is not zero to avoid division by zero
-    if (fabs(divisor) < EPSILON) {
+    if (fabs(divisor) < EPSILON)
+    {
         printf("Error: Division by zero.\n");
-        return 0;  // You can handle this error condition as needed
+        return 0; // You can handle this error condition as needed
     }
 
     // Calculate the remainder using fmod function
     float remainder = fmod(num, divisor);
 
     // Check if the remainder is within the acceptable range of epsilon
-    if (fabs(remainder) < EPSILON) {
-        return 1;  // The float is divisible by the number
-    } else {
-        return 0;  // The float is not divisible by the number
+    if (fabs(remainder) < EPSILON)
+    {
+        return 1; // The float is divisible by the number
+    }
+    else
+    {
+        return 0; // The float is not divisible by the number
     }
 }
 
@@ -61,11 +67,25 @@ Rectangle scaledRectangle(int width, int height)
     return scaledRectangle;
 };
 
-
-
-float getScaleForTexture(Texture2D texture) {
+float getScaleForTexture(Texture2D texture)
+{
     float scaleX = (float)screenWidth / texture.width;
     float scaleY = (float)screenHeight / texture.height;
 
     return fminf(scaleX, scaleY);
+}
+
+Vector2 getVirtualMousePosition()
+{
+    // Update virtual mouse (clamped mouse value behind game screen)
+    Vector2 mouse = GetMousePosition();
+
+    Vector2 virtualMouse = {0};
+
+    virtualMouse.x = (mouse.x - (GetScreenWidth() - (gameScreenWidth * getScale())) * 0.5f) / getScale();
+    virtualMouse.y = (mouse.y - (GetScreenHeight() - (gameScreenHeight * getScale())) * 0.5f) / getScale();
+
+    virtualMouse = Vector2Clamp(virtualMouse, (Vector2){0, 0}, (Vector2){(float)gameScreenWidth, (float)gameScreenHeight});
+
+    return virtualMouse;
 }
