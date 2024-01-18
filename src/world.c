@@ -40,10 +40,7 @@ clouds initClouds1(Texture2D texture)
 {
     int x = -256 + (texture.width / 2);
     int y = -256 + (texture.height / 2);
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     struct clouds clouds = {
         texture,
         position,
@@ -57,10 +54,7 @@ uiBar initWarmthBar(Texture2D texture)
 {
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     struct uiBar uiBar = {
         texture,
         position,
@@ -75,10 +69,7 @@ grassStruct initGrass(Texture2D texture)
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     struct grassStruct grassStruct = {
         texture,
         position,
@@ -93,10 +84,7 @@ nightSkyStruct initNightSky(Texture2D texture)
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){
-        gameScreenWidth / 2 - (texture.width * getScale()) / 2 + x,
-        gameScreenHeight / 2 - (texture.height * getScale()) / 2 + y,
-    };
+    Vector2 position = (Vector2){0,0};
     struct nightSkyStruct nightSkyStruct = {
         texture,
         position,
