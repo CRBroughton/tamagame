@@ -109,9 +109,9 @@ int main(void)
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
         renderNightSky(world.nightSky);
-        renderMountains(world.mountains);
         renderMoon(&world.moon, screenHeight);
         renderSun(&world.sun, screenHeight);
+        renderMountains(world.mountains);
         renderClouds1(clouds1);
         renderGrass(world.grass);
 
