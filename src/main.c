@@ -87,13 +87,18 @@ int main(void)
         }
 
         Vector2 virtualMouse = getVirtualMousePosition();
-        char* logX = intToString(log.position.x);
-        char* mouseX = intToString(virtualMouse.x);
 
         attemptToUseLog(virtualMouse, (Rectangle){log.position.x, log.position.y, log.texture.width * getScaleForTexture(log.texture) / 2, log.texture.height * getScaleForTexture(log.texture) / 2},
                         &egg,
                         &log,
                         &world);
+
+        if (isNightAndMoonVisible(&world.moon, screenHeight) == true)
+        {
+            reduceEggWarmth(&egg, &world, &warmthTimer);
+        }
+
+        updateDayCycle(&world, screenHeight);
 
         // Draw
         //----------------------------------------------------------------------------------

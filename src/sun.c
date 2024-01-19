@@ -35,8 +35,8 @@ sunStruct initSun(Texture2D texture)
 void initSunPosition(sunStruct *sun)
 {
     sun->position = (Vector2){
-        gameScreenWidth / 2 - sun->texture.width * getScaleForTexture(sun->texture) / 2 + sun->x,
-        gameScreenHeight / 2 - sun->texture.height * getScaleForTexture(sun->texture) / 2 + sun->y,
+        gameScreenWidth / 2 - sun->texture.width * getScaleForTexture(sun->texture) / 4 + sun->x,
+        gameScreenHeight / 2 - sun->texture.height * getScaleForTexture(sun->texture) / 4 + sun->y,
     };
 }
 

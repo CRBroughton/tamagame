@@ -35,8 +35,8 @@ moonStruct initMoon(Texture2D texture)
 void initMoonPosition(moonStruct *moon)
 {
     moon->position = (Vector2){
-        gameScreenWidth / 2 - moon->texture.width * getScaleForTexture(moon->texture) / 2 + moon->x,
-        gameScreenHeight / 2 - moon->texture.height * getScaleForTexture(moon->texture) / 2 + moon->y,
+        gameScreenWidth / 2 - moon->texture.width * getScaleForTexture(moon->texture) / 4 + moon->x,
+        gameScreenHeight / 2 - moon->texture.height * getScaleForTexture(moon->texture) / 4 + moon->y,
     };
 }
 
@@ -47,7 +47,7 @@ bool isNight(moonStruct *moon, int screenHeight)
 
 bool isNightAndMoonVisible(moonStruct *moon, int screenHeight)
 {
-    return (moon->y <= screenHeight / 2 - 50);
+    return (moon->y <= screenHeight / 4 - 200);
 }
 
 void renderMoon(moonStruct *moon, int screenHeight)
