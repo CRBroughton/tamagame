@@ -35,16 +35,16 @@ int main(void)
     Texture2D creatureLeftTexture = loadCreatureLeftTexture();
     Texture2D createRightTexture = loadCreatureRightTexture();
     Texture2D logTexture = loadLogTexture();
+    Texture2D mountainsTexture = loadMountainsTexture();
 
     eggStruct egg = initEgg(eggTexture);
-    worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture);
+    worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture, mountainsTexture);
 
     uiBar warmthBar = initUIBar(warmthBarTexture);
     uiBar EXPBar = initUIBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
     logStruct log = initLog(logTexture);
-
     // Render texture initialization, used to hold the rendering result so we can easily resize it
     RenderTexture2D target = LoadRenderTexture(gameScreenWidth, gameScreenHeight);
 
@@ -63,9 +63,10 @@ int main(void)
         initEXPBarPosition(&EXPBar);
         initClouds1Position(&clouds1);
         initcreaturePosition(&creature);
+        initMountainsPositions(&world.mountains);
 
-        UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 320);
-        UpdateSunPosition(&world.sun, screenWidth, screenHeight, 320);
+        UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 260);
+        UpdateSunPosition(&world.sun, screenWidth, screenHeight, 260);
         clouds1.x -= 1;
 
         if (clouds1.x < -300)
@@ -108,6 +109,7 @@ int main(void)
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
         renderNightSky(world.nightSky);
+        renderMountains(world.mountains);
         renderMoon(&world.moon, screenHeight);
         renderSun(&world.sun, screenHeight);
         renderClouds1(clouds1);

@@ -36,6 +36,13 @@ Texture2D loadCloud1Texture()
     return texture;
 }
 
+Texture2D loadMountainsTexture()
+{
+    Texture2D texture = LoadTexture("resources/Mountains.png");
+
+    return texture;
+}
+
 clouds initClouds1(Texture2D texture)
 {
     int x = -256 + (texture.width / 2);
@@ -92,6 +99,33 @@ nightSkyStruct initNightSky(Texture2D texture)
         y};
 
     return nightSkyStruct;
+}
+
+
+mountainsStruct initMountains(Texture2D texture)
+{
+
+    int x = 0;
+    int y = 0;
+    Vector2 position = (Vector2){0,0};
+    struct mountainsStruct mountainsStruct = {
+        texture,
+        position,
+        x,
+        y};
+
+    return mountainsStruct;
+}
+
+void initMountainsPositions(mountainsStruct *mountains)
+{
+    mountains->position = (Vector2){
+        gameScreenWidth / 2 - (mountains->texture.width * getScaleForTexture(mountains->texture)) / 2 + mountains->x,
+        gameScreenHeight / 2 - (mountains->texture.height * getScaleForTexture(mountains->texture)) / 2 + mountains->y,
+    };
+
+    mountains->x = -256 + (mountains->texture.width / 2);
+    mountains->y = -256 + 30;
 }
 
 
@@ -153,6 +187,12 @@ void renderGrass(grassStruct grass)
     DrawTextureEx(grass.texture, grass.position, 0.0f, getScaleForTexture(grass.texture) * 4, WHITE);
 }
 
+void renderMountains(mountainsStruct mountains)
+{
+    // 4 seems to be a 'magic number' for this
+    DrawTextureEx(mountains.texture, mountains.position, 0.0f, getScaleForTexture(mountains.texture) * 4, WHITE);
+}
+
 void renderNightSky(nightSkyStruct nightSky)
 {
     // 4 seems to be a 'magic number' for this
@@ -170,8 +210,9 @@ void renderClouds1(clouds clouds)
     DrawTextureEx(clouds.texture, clouds.position, 0.0f, getScaleForTexture(clouds.texture) * 4, WHITE);
 }
 
-worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D sunTexture, Texture2D nightSkyTexture)
+worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D sunTexture, Texture2D nightSkyTexture, Texture2D mountainsTexture)
 {
+    mountainsStruct mountains = initMountains(mountainsTexture);
     grassStruct grass = initGrass(grassTexture);
     moonStruct moon = initMoon(moonTexture);
     sunStruct sun = initSun(sunTexture);
@@ -183,6 +224,7 @@ worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D s
     int logCount = 0;
 
     worldStruct world = {
+        mountains,
         moon,
         sun,
         grass,
