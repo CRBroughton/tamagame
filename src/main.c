@@ -39,7 +39,8 @@ int main(void)
     eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture);
 
-    uiBar warmthBar = initWarmthBar(warmthBarTexture);
+    uiBar warmthBar = initUIBar(warmthBarTexture);
+    uiBar EXPBar = initUIBar(warmthBarTexture);
     clouds clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
     logStruct log = initLog(logTexture);
@@ -59,6 +60,7 @@ int main(void)
         initMoonPosition(&world.moon);
         initSunPosition(&world.sun);
         initWarmthBarPosition(&warmthBar);
+        initEXPBarPosition(&EXPBar);
         initClouds1Position(&clouds1);
         initcreaturePosition(&creature);
 
@@ -110,11 +112,23 @@ int main(void)
         renderSun(&world.sun, screenHeight);
         renderClouds1(clouds1);
         renderGrass(world.grass);
-        renderEgg(egg);
+
+        if (egg.exp != 3)
+        {
+            renderEgg(egg);
+        }
+
         renderLog(log);
-        renderCreature(&creature);
-        renderWarmthBar(warmthBar);
+
+        if (egg.exp == 3)
+        {
+            renderCreature(&creature);
+        }
+
+        renderUIBar(warmthBar);
+        renderUIBar(EXPBar);
         drawEggWarmthBar(&egg, warmthBar);
+        drawEggEXPBar(&egg, EXPBar);
 
         EndTextureMode();
 

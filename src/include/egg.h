@@ -12,6 +12,7 @@ typedef struct eggStruct
     Vector2 eggPosition;
     int x;
     int y;
+    int exp;
     float frames;
     float target;
     float reducer;
@@ -27,5 +28,6 @@ void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer);
 void increaseEggWarmth(eggStruct *egg);
 void drawEggHealthBar(eggStruct *egg);
 void drawEggWarmthBar(eggStruct *egg, uiBar warmth);
+void drawEggEXPBar(eggStruct *egg, uiBar exp);
 void animateEgg(eggStruct *egg, float speed, int screenWidth);
 #endif // EGG_H

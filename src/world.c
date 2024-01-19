@@ -50,7 +50,7 @@ clouds initClouds1(Texture2D texture)
     return clouds;
 }
 
-uiBar initWarmthBar(Texture2D texture)
+uiBar initUIBar(Texture2D texture)
 {
     int x = 0;
     int y = 0;
@@ -114,6 +114,17 @@ void initWarmthBarPosition(uiBar *warmth)
     warmth->y = -256 + (warmth->texture.height / 2) + 55;
 }
 
+void initEXPBarPosition(uiBar *exp)
+{
+    exp->position = (Vector2){
+        gameScreenWidth / 2 - (exp->texture.width * getScaleForTexture(exp->texture)) / 2 + exp->x,
+        gameScreenHeight / 2 - (exp->texture.height * getScaleForTexture(exp->texture)) / 2 + exp->y,
+    };
+
+    exp->x = -256 + (exp->texture.width / 2) + 35;
+    exp->y = -256 + (exp->texture.height / 2) + 55;
+}
+
 void initGrassPosition(grassStruct *grass)
 {
     grass->position = (Vector2){
@@ -148,7 +159,7 @@ void renderNightSky(nightSkyStruct nightSky)
     DrawTextureEx(nightSky.texture, nightSky.position, 0.0f, getScaleForTexture(nightSky.texture) * 4, WHITE);
 }
 
-void renderWarmthBar(uiBar warmth)
+void renderUIBar(uiBar warmth)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(warmth.texture, warmth.position, 0.0f, getScaleForTexture(warmth.texture), WHITE);

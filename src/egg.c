@@ -19,11 +19,12 @@ eggStruct initEgg(Texture2D texture)
 {
     int eggx = 0;
     int eggy = 0;
-    Vector2 eggPosition = (Vector2){0,0};
+    Vector2 eggPosition = (Vector2){0, 0};
     const int health = 3;
     const int warmth = 3;
     const int x = 0;
     const int y = 0;
+    int exp = 0;
 
     // Set random seed gen
     srand((unsigned int)time(NULL));
@@ -43,6 +44,7 @@ eggStruct initEgg(Texture2D texture)
         eggPosition,
         x,
         y,
+        exp,
         frames,
         target,
         reducer,
@@ -130,11 +132,27 @@ void drawEggWarmthBar(eggStruct *egg, uiBar warmth)
     }
     if (egg->warmth == 2)
     {
-         DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height, 10, warmth.texture.height * 2 + 3, RED);
+        DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height, 10, warmth.texture.height * 2 + 3, RED);
     }
     if (egg->warmth == 1)
     {
-          DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height * 2, 10, warmth.texture.height + 3, RED);
+        DrawRectangle(warmth.position.x + 3, warmth.position.y + 2 + warmth.texture.height * 2, 10, warmth.texture.height + 3, RED);
+    }
+}
+
+void drawEggEXPBar(eggStruct *egg, uiBar exp)
+{
+    if (egg->exp == 3)
+    {
+        DrawRectangle(exp.position.x + 3, exp.position.y + 3, 10, exp.texture.height * 3 + 3, YELLOW);
+    }
+    if (egg->exp == 2)
+    {
+        DrawRectangle(exp.position.x + 3, exp.position.y + 2 + exp.texture.height, 10, exp.texture.height * 2 + 3, YELLOW);
+    }
+    if (egg->exp == 1)
+    {
+        DrawRectangle(exp.position.x + 3, exp.position.y + 2 + exp.texture.height * 2, 10, exp.texture.height + 3, YELLOW);
     }
 }
 

@@ -44,9 +44,11 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
     if (
         CheckCollisionPointRec(mousePosition, textureRect) &&
         IsMouseButtonPressed(MOUSE_LEFT_BUTTON) &&
-        egg->warmth < 3)
+        egg->warmth < 3 &&
+        egg->exp < 3)
     {
         egg->warmth += 1;
+        egg->exp += 1;
         log->isClicked = true;
     }
 }
