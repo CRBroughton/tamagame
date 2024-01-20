@@ -6,6 +6,11 @@
 
 typedef struct eggStruct
 {
+    bool isCracked;
+    Rectangle frameRec;
+    int frameCounter;
+    int frameSpeed;
+    int currentFrame;
     Texture2D texture;
     int health;
     int warmth;
@@ -21,7 +26,7 @@ typedef struct eggStruct
 
 Texture2D loadEggTexture();
 eggStruct initEgg(Texture2D texture);
-void renderEgg(eggStruct egg);
+void renderEgg(eggStruct *egg);
 void initEggPosition(eggStruct *egg);
 void reduceEggHealth(eggStruct *egg, worldStruct *world, double *timer);
 void reduceEggWarmth(eggStruct *egg, worldStruct *world, double *timer);
@@ -30,4 +35,5 @@ void drawEggHealthBar(eggStruct *egg);
 void drawEggWarmthBar(eggStruct *egg, uiBar warmth);
 void drawEggEXPBar(eggStruct *egg, uiBar exp);
 void animateEgg(eggStruct *egg, float speed, int screenWidth);
+void crackEgg(eggStruct *egg);
 #endif // EGG_H

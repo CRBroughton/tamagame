@@ -10,21 +10,20 @@
 
 Texture2D loadEggTexture()
 {
-    Texture2D texture = LoadTexture("resources/Closed_Egg.png");
+    Texture2D texture = LoadTexture("resources/EggCracking.png");
 
     return texture;
 }
 
 eggStruct initEgg(Texture2D texture)
 {
-    int eggx = 0;
-    int eggy = 0;
     Vector2 eggPosition = (Vector2){0, 0};
     const int health = 3;
-    const int warmth = 3;
+    int warmth = 3;
     const int x = 0;
     const int y = 0;
     int exp = 0;
+    bool isCracked = false;
 
     // Set random seed gen
     srand((unsigned int)time(NULL));
@@ -37,7 +36,22 @@ eggStruct initEgg(Texture2D texture)
     float target = shakeArray[randomIndex];
     float reducer = shakeArray[secondRanIndex];
 
+    Rectangle frameRec = {
+        0.0f,
+        0.0f,
+        (float)texture.width / 6,
+        (float)texture.height,
+    };
+    int frameCounter = 0;
+    int frameSpeed = 1;
+    int currentFrame = 0;
+
     struct eggStruct eggStruct = {
+        isCracked,
+        frameRec,
+        frameCounter,
+        frameSpeed,
+        currentFrame,
         texture,
         health,
         warmth,
@@ -48,22 +62,45 @@ eggStruct initEgg(Texture2D texture)
         frames,
         target,
         reducer,
-        x,
-        y};
+    };
 
     return eggStruct;
 };
 
-void renderEgg(eggStruct egg)
+void renderEgg(eggStruct *egg)
 {
-    DrawTextureEx(egg.texture, egg.eggPosition, 0.0f, getScaleForTexture(egg.texture) / 2, WHITE);
+    float scaleX = (float)screenWidth / egg->frameRec.width;
+    float scaleY = (float)screenHeight / egg->frameRec.height;
+
+    float scale = fminf(scaleX, scaleY) / 2;
+
+    if (egg->isCracked == false)
+    {
+        DrawTexturePro(
+            egg->texture,
+            egg->frameRec,
+            (Rectangle){
+                egg->eggPosition.x,
+                egg->eggPosition.y,
+                egg->frameRec.width * scale,
+                egg->frameRec.height * scale},
+            (Vector2){0, 0},
+            0.0f,
+            WHITE);
+    }
 }
 
 void initEggPosition(eggStruct *egg)
 {
+
+    float scaleX = (float)screenWidth / egg->frameRec.width;
+    float scaleY = (float)screenHeight / egg->frameRec.height;
+
+    float scale = fminf(scaleX, scaleY) / 4;
+
     egg->eggPosition = (Vector2){
-        gameScreenWidth / 2 - egg->texture.width * getScaleForTexture(egg->texture) / 4 + egg->x,
-        gameScreenHeight / 2 - egg->texture.height * getScaleForTexture(egg->texture) / 4 + egg->y,
+        gameScreenWidth / 2 - egg->frameRec.width * scale + egg->x,
+        gameScreenHeight / 2 - egg->frameRec.height * scale + egg->y,
     };
 }
 
@@ -172,6 +209,28 @@ void drawEggHealthBar(eggStruct *egg)
         DrawRectangle(21, 32, 3, 10, ORANGE);
     }
     DrawRectangle(21, 32, 3, 0, ORANGE);
+}
+
+void crackEgg(eggStruct *egg)
+{
+    if (egg->exp == 3 && egg->isCracked == false)
+    {
+        egg->frameCounter++;
+
+        if (egg->frameCounter >= (60 / egg->frameSpeed))
+        {
+            egg->frameCounter = 0;
+            egg->currentFrame++;
+
+            if (egg->currentFrame > 5)
+            {
+                egg->currentFrame = 0;
+                egg->isCracked = true;
+            }
+
+            egg->frameRec.x = (float)egg->currentFrame * (float)egg->texture.width / 6;
+        }
+    }
 }
 
 void animateEgg(eggStruct *egg, float speed, int screenWidth)

@@ -74,6 +74,10 @@ int main(void)
             clouds1.x = 500;
         };
 
+        if (egg.exp == 3 && egg.isCracked == false) {
+            crackEgg(&egg);
+        }
+
         updateCreature(&creature);
         moveCreature(&creature);
 
@@ -115,14 +119,11 @@ int main(void)
         renderClouds1(clouds1);
         renderGrass(world.grass);
 
-        if (egg.exp != 3)
-        {
-            renderEgg(egg);
-        }
+        renderEgg(&egg);
 
         renderLog(log);
 
-        if (egg.exp == 3)
+        if (egg.exp == 3 && egg.isCracked == true)
         {
             renderCreature(&creature);
         }
