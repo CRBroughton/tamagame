@@ -18,9 +18,6 @@ typedef struct creatureStruct
     Rectangle frameRec;
 } creatureStruct;
 
-Texture2D loadCreatureTexture();
-Texture2D loadCreatureLeftTexture();
-Texture2D loadCreatureRightTexture();
 creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right);
 void initcreaturePosition(creatureStruct *creature);
 void renderCreature(creatureStruct *creature);

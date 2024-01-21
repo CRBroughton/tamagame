@@ -8,51 +8,27 @@
 
 #include <stdio.h>
 
-Texture2D loadGrassTexture()
+WorldObject createWorldObj(Texture2D texture)
 {
-    Texture2D texture = LoadTexture("resources/Grass.png");
+    Vector2 position = (Vector2){0, 0};
+    int x = 0;
+    int y = 0;
 
-    return texture;
-};
-
-Texture2D loadNightSkyTexture()
-{
-    Texture2D texture = LoadTexture("resources/Night_Sky.png");
-
-    return texture;
-}
-
-Texture2D loadWarmthTexture()
-{
-    Texture2D texture = LoadTexture("resources/UI_Bar.png");
-
-    return texture;
-}
-
-Texture2D loadCloud1Texture()
-{
-    Texture2D texture = LoadTexture("resources/Clouds1.png");
-
-    return texture;
-}
-
-Texture2D loadMountainsTexture()
-{
-    Texture2D texture = LoadTexture("resources/Mountains.png");
-
-    return texture;
-}
-
-clouds initClouds1(Texture2D texture)
-{
-    int x = -256 + (texture.width / 2);
-    int y = -256 + (texture.height / 2);
-    Vector2 position = (Vector2){0,0};
-    struct clouds clouds = {
+    WorldObject worldObject = {
         texture,
         position,
         x,
-        y};
+        y,
+    };
+
+    return worldObject;
+}
+
+WorldObject initClouds1(Texture2D texture)
+{
+    WorldObject clouds = createWorldObj(texture);
+    clouds.x = -256 + (texture.width / 2);
+    clouds.y = -256 + (texture.height / 2);
 
     return clouds;
 }
@@ -61,7 +37,7 @@ uiBar initUIBar(Texture2D texture)
 {
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
+    Vector2 position = (Vector2){0, 0};
     struct uiBar uiBar = {
         texture,
         position,
@@ -71,13 +47,13 @@ uiBar initUIBar(Texture2D texture)
     return uiBar;
 };
 
-grassStruct initGrass(Texture2D texture)
+WorldObject initGrass(Texture2D texture)
 {
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
-    struct grassStruct grassStruct = {
+    Vector2 position = (Vector2){0, 0};
+    struct WorldObject grassStruct = {
         texture,
         position,
         x,
@@ -86,13 +62,13 @@ grassStruct initGrass(Texture2D texture)
     return grassStruct;
 }
 
-nightSkyStruct initNightSky(Texture2D texture)
+WorldObject initNightSky(Texture2D texture)
 {
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
-    struct nightSkyStruct nightSkyStruct = {
+    Vector2 position = (Vector2){0, 0};
+    struct WorldObject nightSkyStruct = {
         texture,
         position,
         x,
@@ -101,14 +77,13 @@ nightSkyStruct initNightSky(Texture2D texture)
     return nightSkyStruct;
 }
 
-
-mountainsStruct initMountains(Texture2D texture)
+WorldObject initMountains(Texture2D texture)
 {
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
-    struct mountainsStruct mountainsStruct = {
+    Vector2 position = (Vector2){0, 0};
+    struct WorldObject mountainsStruct = {
         texture,
         position,
         x,
@@ -117,7 +92,7 @@ mountainsStruct initMountains(Texture2D texture)
     return mountainsStruct;
 }
 
-void initMountainsPositions(mountainsStruct *mountains)
+void initMountainsPositions(WorldObject *mountains)
 {
     mountains->position = (Vector2){
         gameScreenWidth / 2 - (mountains->texture.width * getScaleForTexture(mountains->texture)) / 2 + mountains->x,
@@ -128,8 +103,7 @@ void initMountainsPositions(mountainsStruct *mountains)
     mountains->y = -256 + 30;
 }
 
-
-void initClouds1Position(clouds *clouds)
+void initClouds1Position(WorldObject *clouds)
 {
     clouds->position = (Vector2){
         gameScreenWidth / 2 - (clouds->texture.width * getScaleForTexture(clouds->texture)) / 2 + clouds->x,
@@ -159,7 +133,7 @@ void initEXPBarPosition(uiBar *exp)
     exp->y = -256 + (exp->texture.height / 2) + 55;
 }
 
-void initGrassPosition(grassStruct *grass)
+void initGrassPosition(WorldObject *grass)
 {
     grass->position = (Vector2){
         gameScreenWidth / 2 - (grass->texture.width * getScaleForTexture(grass->texture)) / 2 + grass->x,
@@ -170,7 +144,7 @@ void initGrassPosition(grassStruct *grass)
     grass->y = -5;
 }
 
-void initNightSkyPosition(nightSkyStruct *nightSky)
+void initNightSkyPosition(WorldObject *nightSky)
 {
     nightSky->position = (Vector2){
         gameScreenWidth / 2 - (nightSky->texture.width * getScaleForTexture(nightSky->texture)) / 2 + nightSky->x,
@@ -181,19 +155,19 @@ void initNightSkyPosition(nightSkyStruct *nightSky)
     nightSky->y = -256 + 30;
 }
 
-void renderGrass(grassStruct grass)
+void renderGrass(WorldObject grass)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(grass.texture, grass.position, 0.0f, getScaleForTexture(grass.texture) * 4, WHITE);
 }
 
-void renderMountains(mountainsStruct mountains)
+void renderMountains(WorldObject mountains)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(mountains.texture, mountains.position, 0.0f, getScaleForTexture(mountains.texture) * 4, WHITE);
 }
 
-void renderNightSky(nightSkyStruct nightSky)
+void renderNightSky(WorldObject nightSky)
 {
     // 4 seems to be a 'magic number' for this
     DrawTextureEx(nightSky.texture, nightSky.position, 0.0f, getScaleForTexture(nightSky.texture) * 4, WHITE);
@@ -205,18 +179,18 @@ void renderUIBar(uiBar warmth)
     DrawTextureEx(warmth.texture, warmth.position, 0.0f, getScaleForTexture(warmth.texture), WHITE);
 }
 
-void renderClouds1(clouds clouds)
+void renderClouds1(WorldObject clouds)
 {
     DrawTextureEx(clouds.texture, clouds.position, 0.0f, getScaleForTexture(clouds.texture) * 4, WHITE);
 }
 
 worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D sunTexture, Texture2D nightSkyTexture, Texture2D mountainsTexture)
 {
-    mountainsStruct mountains = initMountains(mountainsTexture);
-    grassStruct grass = initGrass(grassTexture);
+    WorldObject mountains = initMountains(mountainsTexture);
+    WorldObject grass = initGrass(grassTexture);
     moonStruct moon = initMoon(moonTexture);
     sunStruct sun = initSun(sunTexture);
-    nightSkyStruct nightSky = initNightSky(nightSkyTexture);
+    WorldObject nightSky = initNightSky(nightSkyTexture);
 
     bool night = true;
     bool day = false;

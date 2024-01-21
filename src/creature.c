@@ -7,27 +7,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-Texture2D loadCreatureTexture()
-{
-    Texture2D texture = LoadTexture("resources/CreatureSpriteSheet.png");
-
-    return texture;
-}
-
-Texture2D loadCreatureLeftTexture()
-{
-    Texture2D texture = LoadTexture("resources/CreatureLeftSpriteSheet.png");
-
-    return texture;
-}
-
-Texture2D loadCreatureRightTexture()
-{
-    Texture2D texture = LoadTexture("resources/CreatureRightSpriteSheet.png");
-
-    return texture;
-}
-
 creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
 {
     int x = 0;
@@ -38,7 +17,7 @@ creatureStruct initCreature(Texture2D texture, Texture2D left, Texture2D right)
         (float)texture.width / 2,
         (float)texture.height,
     };
-    Vector2 position = (Vector2){0,0};
+    Vector2 position = (Vector2){0, 0};
     int frameCounter = 0;
     int frameSpeed = 1;
     int currentFrame = 0;
@@ -136,7 +115,7 @@ void moveCreature(creatureStruct *creature)
 {
     bool isLeftSideScreen = creature->x <= -256 + creature->texture.width * getScaleForTexture(creature->texture) / 4;
     bool isRightSideScreen = creature->x >= 256 - creature->texture.width *
-                                                            getScaleForTexture(creature->texture) / 4;
+                                                      getScaleForTexture(creature->texture) / 4;
     if (IsKeyDown(KEY_D) && !isRightSideScreen)
     {
         creature->x += 1;

@@ -6,19 +6,12 @@
 #include <stdio.h>
 #include <math.h>
 
-Texture2D renderMoonTexture()
-{
-    Texture2D texture = LoadTexture("resources/Moon.png");
-
-    return texture;
-}
-
 moonStruct initMoon(Texture2D texture)
 {
 
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
+    Vector2 position = (Vector2){0, 0};
     float angle = 120.0f;
 
     moonStruct moonStruct = {

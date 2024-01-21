@@ -19,7 +19,6 @@ typedef struct LogPosition {
     int y;
 } LogPosition;
 
-Texture2D loadLogTexture();
 logStruct initLog(Texture2D texture);
 void renderLog(logStruct log);
 void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *egg, logStruct *log, worldStruct *world);

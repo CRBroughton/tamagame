@@ -24,25 +24,25 @@ int main(void)
     SetWindowMinSize(128, 128);
 
     // // Texture loading
-    Texture2D eggTexture = loadEggTexture();
-    Texture2D moonTexture = renderMoonTexture();
-    Texture2D sunTexture = loadSunTexture();
-    Texture2D grassTexture = loadGrassTexture();
-    Texture2D nightSkyTexture = loadNightSkyTexture();
-    Texture2D warmthBarTexture = loadWarmthTexture();
-    Texture2D clouds1Texture = loadCloud1Texture();
-    Texture2D creatureTexture = loadCreatureTexture();
-    Texture2D creatureLeftTexture = loadCreatureLeftTexture();
-    Texture2D createRightTexture = loadCreatureRightTexture();
-    Texture2D logTexture = loadLogTexture();
-    Texture2D mountainsTexture = loadMountainsTexture();
+    Texture2D eggTexture = LoadTexture("resources/EggCracking.png");
+    Texture2D moonTexture = LoadTexture("resources/Moon/png");
+    Texture2D sunTexture = LoadTexture("resources/Sun.png");
+    Texture2D grassTexture = LoadTexture("resources/Grass.png");
+    Texture2D nightSkyTexture = LoadTexture("resources/Night_Sky.png");
+    Texture2D warmthBarTexture = LoadTexture("resources/UI_Bar.png");
+    Texture2D clouds1Texture = LoadTexture("resources/Clouds1.png");
+    Texture2D creatureTexture = LoadTexture("resources/CreatureSpriteSheet.png");
+    Texture2D creatureLeftTexture = LoadTexture("resources/CreatureLeftSpriteSheet.png");
+    Texture2D createRightTexture = LoadTexture("resources/CreatureRightSpriteSheet.png");
+    Texture2D logTexture = LoadTexture("resources/Log.png");
+    Texture2D mountainsTexture = LoadTexture("resources/Mountains.png");
 
     eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture, mountainsTexture);
 
     uiBar warmthBar = initUIBar(warmthBarTexture);
     uiBar EXPBar = initUIBar(warmthBarTexture);
-    clouds clouds1 = initClouds1(clouds1Texture);
+    WorldObject clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
     logStruct log = initLog(logTexture);
     // Render texture initialization, used to hold the rendering result so we can easily resize it
@@ -74,7 +74,8 @@ int main(void)
             clouds1.x = 500;
         };
 
-        if (egg.exp == 3 && egg.isCracked == false) {
+        if (egg.exp == 3 && egg.isCracked == false)
+        {
             crackEgg(&egg);
         }
 

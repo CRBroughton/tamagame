@@ -75,6 +75,20 @@ float getScaleForTexture(Texture2D texture)
     return fminf(scaleX, scaleY);
 }
 
+float getScaleForSpriteSheet(Rectangle frameRec, int divider)
+{
+    // set default value
+    if (divider == 0)
+    {
+        divider = 0;
+    }
+
+    float scaleX = (float)screenWidth / frameRec.width;
+    float scaleY = (float)screenHeight / frameRec.height;
+
+    return fminf(scaleX, scaleY) / divider;
+}
+
 Vector2 getVirtualMousePosition()
 {
     // Update virtual mouse (clamped mouse value behind game screen)

@@ -7,18 +7,11 @@
 #include <stdio.h>
 #include <math.h>
 
-Texture2D loadSunTexture()
-{
-    Texture2D texture = LoadTexture("resources/Sun.png");
-
-    return texture;
-}
-
 sunStruct initSun(Texture2D texture)
 {
     int x = 0;
     int y = 0;
-    Vector2 position = (Vector2){0,0};
+    Vector2 position = (Vector2){0, 0};
     float angle = 10.0f;
 
     sunStruct sunStruct = {

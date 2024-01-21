@@ -24,7 +24,6 @@ typedef struct eggStruct
     float shakeArray[5];
 } eggStruct;
 
-Texture2D loadEggTexture();
 eggStruct initEgg(Texture2D texture);
 void renderEgg(eggStruct *egg);
 void initEggPosition(eggStruct *egg);

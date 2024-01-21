@@ -8,18 +8,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-Texture2D loadLogTexture()
-{
-    Texture2D texture = LoadTexture("resources/Log.png");
-
-    return texture;
-}
-
 logStruct initLog(Texture2D texture)
 {
     bool isClicked = true;
 
-    Vector2 position = (Vector2){0,0};
+    Vector2 position = (Vector2){0, 0};
 
     logStruct logStruct = {
         texture,
@@ -53,31 +46,38 @@ void attemptToUseLog(Vector2 mousePosition, Rectangle textureRect, eggStruct *eg
     }
 }
 
-bool spawnNewLog(worldStruct *world, logStruct *log) {
-    if (log->isClicked == false) {
+bool spawnNewLog(worldStruct *world, logStruct *log)
+{
+    if (log->isClicked == false)
+    {
         return false;
     }
-    if (world->night == false) {
+    if (world->night == false)
+    {
         return false;
     }
 
     float randomValue = ((float)rand() / (float)RAND_MAX); // Generate a random float between 0 and 1
-    
+
     float probability = 0.005f;
 
-    if (randomValue < probability) {
-       return true;
-    } else {
+    if (randomValue < probability)
+    {
+        return true;
+    }
+    else
+    {
         return false;
     }
 }
 
-LogPosition getRandomLogPosition() {
+LogPosition getRandomLogPosition()
+{
     const int ARRAY_SIZE = 3;
     LogPosition possiblePositions[ARRAY_SIZE] = {
-        {x: 10, y: 10},
-        {x: 20, y: 10},
-        {x: 30, y: 15}};
+        {x : 10, y : 10},
+        {x : 20, y : 10},
+        {x : 30, y : 15}};
 
     srand((unsigned int)time(NULL));
 
@@ -85,4 +85,3 @@ LogPosition getRandomLogPosition() {
 
     return possiblePositions[randomIndex];
 };
-

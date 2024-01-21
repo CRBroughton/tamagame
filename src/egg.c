@@ -8,13 +8,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-Texture2D loadEggTexture()
-{
-    Texture2D texture = LoadTexture("resources/EggCracking.png");
-
-    return texture;
-}
-
 eggStruct initEgg(Texture2D texture)
 {
     Vector2 eggPosition = (Vector2){0, 0};
@@ -69,11 +62,6 @@ eggStruct initEgg(Texture2D texture)
 
 void renderEgg(eggStruct *egg)
 {
-    float scaleX = (float)screenWidth / egg->frameRec.width;
-    float scaleY = (float)screenHeight / egg->frameRec.height;
-
-    float scale = fminf(scaleX, scaleY) / 2;
-
     if (egg->isCracked == false)
     {
         DrawTexturePro(
@@ -82,8 +70,8 @@ void renderEgg(eggStruct *egg)
             (Rectangle){
                 egg->eggPosition.x,
                 egg->eggPosition.y,
-                egg->frameRec.width * scale,
-                egg->frameRec.height * scale},
+                egg->frameRec.width * getScaleForSpriteSheet(egg->frameRec, 2),
+                egg->frameRec.height * getScaleForSpriteSheet(egg->frameRec, 2)},
             (Vector2){0, 0},
             0.0f,
             WHITE);

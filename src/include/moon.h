@@ -13,7 +13,6 @@ typedef struct moonStruct
 
 } moonStruct;
 
-Texture2D renderMoonTexture();
 moonStruct initMoon(Texture2D texture);
 void renderMoon(moonStruct *moon, int screenHeight);
 void initMoonPosition(moonStruct *moon);
