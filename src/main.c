@@ -88,31 +88,34 @@ int main(void)
             crackEgg(&egg);
         }
 
-        updateCreature(&creature);
-        moveCreature(&creature);
-
-        if (spawnNewLog(&world, &log) == true)
+        if (game_start == true)
         {
-            // TODO - Move probability of log spawning to world
-            // And randomly show a log in the log array
-            LogPosition newPosition = getRandomLogPosition();
-            log.isClicked = false;
-            log.position = (Vector2){
-                gameScreenWidth / 2 - log.texture.width * getScaleForTexture(log.texture) / 4 + newPosition.x,
-                gameScreenHeight / 2 - log.texture.height * getScaleForTexture(log.texture) / 4 + newPosition.y,
-            };
-        }
+            updateCreature(&creature);
+            moveCreature(&creature);
 
-        Vector2 virtualMouse = getVirtualMousePosition();
+            if (spawnNewLog(&world, &log) == true)
+            {
+                // TODO - Move probability of log spawning to world
+                // And randomly show a log in the log array
+                LogPosition newPosition = getRandomLogPosition();
+                log.isClicked = false;
+                log.position = (Vector2){
+                    gameScreenWidth / 2 - log.texture.width * getScaleForTexture(log.texture) / 4 + newPosition.x,
+                    gameScreenHeight / 2 - log.texture.height * getScaleForTexture(log.texture) / 4 + newPosition.y,
+                };
+            }
 
-        attemptToUseLog(virtualMouse, (Rectangle){log.position.x, log.position.y, log.texture.width * getScaleForTexture(log.texture) / 2, log.texture.height * getScaleForTexture(log.texture) / 2},
-                        &egg,
-                        &log,
-                        &world);
+            Vector2 virtualMouse = getVirtualMousePosition();
 
-        if (isNightAndMoonVisible(&world.moon, screenHeight) == true)
-        {
-            reduceEggWarmth(&egg, &world, &warmthTimer);
+            attemptToUseLog(virtualMouse, (Rectangle){log.position.x, log.position.y, log.texture.width * getScaleForTexture(log.texture) / 2, log.texture.height * getScaleForTexture(log.texture) / 2},
+                            &egg,
+                            &log,
+                            &world);
+
+            if (isNightAndMoonVisible(&world.moon, screenHeight) == true)
+            {
+                reduceEggWarmth(&egg, &world, &warmthTimer);
+            }
         }
 
         updateDayCycle(&world, screenHeight);
