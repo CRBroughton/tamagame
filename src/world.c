@@ -8,22 +8,6 @@
 
 #include <stdio.h>
 
-WorldObject createWorldObj(Texture2D texture)
-{
-    Vector2 position = (Vector2){0, 0};
-    int x = 0;
-    int y = 0;
-
-    WorldObject worldObject = {
-        texture,
-        position,
-        x,
-        y,
-    };
-
-    return worldObject;
-}
-
 WorldObject initWorldObj(Texture2D texture)
 {
     int x = 0;
@@ -40,7 +24,7 @@ WorldObject initWorldObj(Texture2D texture)
 
 WorldObject initClouds1(Texture2D texture)
 {
-    WorldObject clouds = createWorldObj(texture);
+    WorldObject clouds = initWorldObj(texture);
     clouds.x = -256 + (texture.width / 2);
     clouds.y = -256 + (texture.height / 2);
 
