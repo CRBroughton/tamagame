@@ -149,7 +149,7 @@ void increaseEggWarmth(eggStruct *egg)
     }
 }
 
-void drawEggWarmthBar(eggStruct *egg, uiBar warmth)
+void drawEggWarmthBar(eggStruct *egg, WorldObject warmth)
 {
     if (egg->warmth == 3)
     {
@@ -165,7 +165,7 @@ void drawEggWarmthBar(eggStruct *egg, uiBar warmth)
     }
 }
 
-void drawEggEXPBar(eggStruct *egg, uiBar exp)
+void drawEggEXPBar(eggStruct *egg, WorldObject exp)
 {
     if (egg->exp == 3)
     {

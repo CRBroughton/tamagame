@@ -40,8 +40,8 @@ int main(void)
     eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture, mountainsTexture);
 
-    uiBar warmthBar = initUIBar(warmthBarTexture);
-    uiBar EXPBar = initUIBar(warmthBarTexture);
+    WorldObject warmthBar = initWorldObj(warmthBarTexture);
+    WorldObject EXPBar = initWorldObj(warmthBarTexture);
     WorldObject clouds1 = initClouds1(clouds1Texture);
     creatureStruct creature = initCreature(creatureTexture, creatureLeftTexture, createRightTexture);
     logStruct log = initLog(logTexture);
@@ -67,12 +67,7 @@ int main(void)
 
         UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 260);
         UpdateSunPosition(&world.sun, screenWidth, screenHeight, 260);
-        clouds1.x -= 1;
-
-        if (clouds1.x < -300)
-        {
-            clouds1.x = 500;
-        };
+        UpdateCloudPosition(&clouds1);
 
         if (egg.exp == 3 && egg.isCracked == false)
         {
@@ -113,6 +108,7 @@ int main(void)
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
+        DrawRectangle(0, 0, gameScreenWidth, gameScreenHeight, (Color){34,32,52,255});
         renderNightSky(world.nightSky);
         renderMoon(&world.moon, screenHeight);
         renderSun(&world.sun, screenHeight);

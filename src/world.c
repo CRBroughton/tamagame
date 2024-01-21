@@ -24,6 +24,20 @@ WorldObject createWorldObj(Texture2D texture)
     return worldObject;
 }
 
+WorldObject initWorldObj(Texture2D texture)
+{
+    int x = 0;
+    int y = 0;
+    Vector2 position = (Vector2){0, 0};
+    struct WorldObject worldObj = {
+        texture,
+        position,
+        x,
+        y};
+
+    return worldObj;
+}
+
 WorldObject initClouds1(Texture2D texture)
 {
     WorldObject clouds = createWorldObj(texture);
@@ -31,65 +45,6 @@ WorldObject initClouds1(Texture2D texture)
     clouds.y = -256 + (texture.height / 2);
 
     return clouds;
-}
-
-uiBar initUIBar(Texture2D texture)
-{
-    int x = 0;
-    int y = 0;
-    Vector2 position = (Vector2){0, 0};
-    struct uiBar uiBar = {
-        texture,
-        position,
-        x,
-        y};
-
-    return uiBar;
-};
-
-WorldObject initGrass(Texture2D texture)
-{
-
-    int x = 0;
-    int y = 0;
-    Vector2 position = (Vector2){0, 0};
-    struct WorldObject grassStruct = {
-        texture,
-        position,
-        x,
-        y};
-
-    return grassStruct;
-}
-
-WorldObject initNightSky(Texture2D texture)
-{
-
-    int x = 0;
-    int y = 0;
-    Vector2 position = (Vector2){0, 0};
-    struct WorldObject nightSkyStruct = {
-        texture,
-        position,
-        x,
-        y};
-
-    return nightSkyStruct;
-}
-
-WorldObject initMountains(Texture2D texture)
-{
-
-    int x = 0;
-    int y = 0;
-    Vector2 position = (Vector2){0, 0};
-    struct WorldObject mountainsStruct = {
-        texture,
-        position,
-        x,
-        y};
-
-    return mountainsStruct;
 }
 
 void initMountainsPositions(WorldObject *mountains)
@@ -111,7 +66,7 @@ void initClouds1Position(WorldObject *clouds)
     };
 }
 
-void initWarmthBarPosition(uiBar *warmth)
+void initWarmthBarPosition(WorldObject *warmth)
 {
     warmth->position = (Vector2){
         gameScreenWidth / 2 - (warmth->texture.width * getScaleForTexture(warmth->texture)) / 2 + warmth->x,
@@ -122,7 +77,7 @@ void initWarmthBarPosition(uiBar *warmth)
     warmth->y = -256 + (warmth->texture.height / 2) + 55;
 }
 
-void initEXPBarPosition(uiBar *exp)
+void initEXPBarPosition(WorldObject *exp)
 {
     exp->position = (Vector2){
         gameScreenWidth / 2 - (exp->texture.width * getScaleForTexture(exp->texture)) / 2 + exp->x,
@@ -173,10 +128,9 @@ void renderNightSky(WorldObject nightSky)
     DrawTextureEx(nightSky.texture, nightSky.position, 0.0f, getScaleForTexture(nightSky.texture) * 4, WHITE);
 }
 
-void renderUIBar(uiBar warmth)
+void renderUIBar(WorldObject uiBar)
 {
-    // 4 seems to be a 'magic number' for this
-    DrawTextureEx(warmth.texture, warmth.position, 0.0f, getScaleForTexture(warmth.texture), WHITE);
+    DrawTextureEx(uiBar.texture, uiBar.position, 0.0f, getScaleForTexture(uiBar.texture), WHITE);
 }
 
 void renderClouds1(WorldObject clouds)
@@ -186,11 +140,11 @@ void renderClouds1(WorldObject clouds)
 
 worldStruct initWorld(Texture2D grassTexture, Texture2D moonTexture, Texture2D sunTexture, Texture2D nightSkyTexture, Texture2D mountainsTexture)
 {
-    WorldObject mountains = initMountains(mountainsTexture);
-    WorldObject grass = initGrass(grassTexture);
+    WorldObject mountains = initWorldObj(mountainsTexture);
+    WorldObject grass = initWorldObj(grassTexture);
     moonStruct moon = initMoon(moonTexture);
     sunStruct sun = initSun(sunTexture);
-    WorldObject nightSky = initNightSky(nightSkyTexture);
+    WorldObject nightSky = initWorldObj(nightSkyTexture);
 
     bool night = true;
     bool day = false;
@@ -222,4 +176,14 @@ void updateDayCycle(worldStruct *world, int screenHeight)
     {
         world->night = false;
     }
+}
+
+void UpdateCloudPosition(WorldObject *clouds)
+{
+    clouds->x -= 1;
+
+    if (clouds->x < -300)
+    {
+        clouds->x = 500;
+    };
 }
