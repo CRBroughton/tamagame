@@ -5,6 +5,7 @@
 #include "include/creature.h"
 #include "include/utils.h"
 #include "include/constants.h"
+#include "include/titleScreen.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +25,8 @@ int main(void)
     SetWindowMinSize(128, 128);
 
     // // Texture loading
+    Texture2D titleScreenTexture = LoadTexture("resources/titleScreen.png");
+    Texture2D startTextTexture = LoadTexture("resources/begin.png");
     Texture2D eggTexture = LoadTexture("resources/EggCracking.png");
     Texture2D moonTexture = LoadTexture("resources/Moon/png");
     Texture2D sunTexture = LoadTexture("resources/Sun.png");
@@ -37,6 +40,8 @@ int main(void)
     Texture2D logTexture = LoadTexture("resources/Log.png");
     Texture2D mountainsTexture = LoadTexture("resources/Mountains.png");
 
+    WorldObject titleScreen = initTitleScreen(titleScreenTexture);
+    WorldObject startText = initStartText(startTextTexture);
     eggStruct egg = initEgg(eggTexture);
     worldStruct world = initWorld(grassTexture, moonTexture, sunTexture, nightSkyTexture, mountainsTexture);
 
@@ -51,9 +56,13 @@ int main(void)
     SetTargetFPS(60);
     double warmthTimer = GetTime();
 
+    bool game_start = false;
+
     // Main game loop
     while (!WindowShouldClose()) // Detect window close button or ESC key
     {
+        initTitleScreenPosition(&titleScreen);
+        initTitleScreenPosition(&startText);
         initNightSkyPosition(&world.nightSky);
         initGrassPosition(&world.grass);
         initEggPosition(&egg);
@@ -68,6 +77,11 @@ int main(void)
         UpdateMoonPosition(&world.moon, screenWidth, screenHeight, 260);
         UpdateSunPosition(&world.sun, screenWidth, screenHeight, 260);
         UpdateCloudPosition(&clouds1);
+
+        if (IsKeyPressed(KEY_SPACE) && game_start == false)
+        {
+            game_start = true;
+        }
 
         if (egg.exp == 3 && egg.isCracked == false)
         {
@@ -108,7 +122,7 @@ int main(void)
         // Draw everything in the render texture, note this will not be rendered on screen, yet
         BeginTextureMode(target);
         ClearBackground(RAYWHITE); // Clear render texture background color
-        DrawRectangle(0, 0, gameScreenWidth, gameScreenHeight, (Color){34,32,52,255});
+        DrawRectangle(0, 0, gameScreenWidth, gameScreenHeight, (Color){34, 32, 52, 255});
         renderNightSky(world.nightSky);
         renderMoon(&world.moon, screenHeight);
         renderSun(&world.sun, screenHeight);
@@ -116,20 +130,28 @@ int main(void)
         renderClouds1(clouds1);
         renderGrass(world.grass);
 
-        renderEgg(&egg);
-
-        renderLog(log);
-
-        if (egg.exp == 3 && egg.isCracked == true)
+        if (game_start == false)
         {
-            renderCreature(&creature);
+            renderTitleScreen(titleScreen);
+            renderTitleScreen(startText);
         }
 
-        renderUIBar(warmthBar);
-        renderUIBar(EXPBar);
-        drawEggWarmthBar(&egg, warmthBar);
-        drawEggEXPBar(&egg, EXPBar);
+        if (game_start == true)
+        {
+            renderEgg(&egg);
 
+            renderLog(log);
+
+            if (egg.exp == 3 && egg.isCracked == true)
+            {
+                renderCreature(&creature);
+            }
+
+            renderUIBar(warmthBar);
+            renderUIBar(EXPBar);
+            drawEggWarmthBar(&egg, warmthBar);
+            drawEggEXPBar(&egg, EXPBar);
+        }
         EndTextureMode();
 
         BeginDrawing();
@@ -144,12 +166,20 @@ int main(void)
         EndDrawing();
     }
 
-    UnloadTexture(target.texture);
+    UnloadTexture(titleScreenTexture);
+    UnloadTexture(startTextTexture);
     UnloadTexture(eggTexture);
     UnloadTexture(moonTexture);
     UnloadTexture(sunTexture);
     UnloadTexture(grassTexture);
+    UnloadTexture(nightSkyTexture);
+    UnloadTexture(warmthBarTexture);
     UnloadTexture(clouds1Texture);
+    UnloadTexture(creatureTexture);
+    UnloadTexture(creatureLeftTexture);
+    UnloadTexture(createRightTexture);
+    UnloadTexture(logTexture);
+    UnloadTexture(target.texture);
     CloseWindow();
     return 0;
 }
